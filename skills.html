@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills & Expertise - Professional Portfolio</title>
+    <meta name="description" content="Comprehensive overview of technical skills, programming languages, frameworks, and expertise in web development, mobile apps, and data science.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        sage: {
+                            50: '#f6f7f5',
+                            100: '#e8eae6',
+                            200: '#d1d5cc',
+                            300: '#b4bba8',
+                            400: '#949e85',
+                            500: '#7c8471',
+                            600: '#626858',
+                            700: '#4f5449',
+                            800: '#41443c',
+                            900: '#363931'
+                        }
+                    },
+                    fontFamily: {
+                        'display': ['Georgia', 'serif'],
+                        'body': ['Inter', 'system-ui', 'sans-serif'],
+                        'mono': ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .skill-bar {
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+        
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-animate.animate-fade-in-up {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .tech-card {
+            transition: all 0.3s ease;
+        }
+        
+        .tech-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(124, 132, 113, 0.15);
+        }
+        
+        .certification-badge {
+            transition: all 0.3s ease;
+        }
+        
+        .certification-badge:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="font-body text-gray-800 bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 z-40">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="font-display font-bold text-xl text-gray-900">
+                    <a href="index.html">Portfolio</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Home</a>
+                    <a href="projects.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Projects</a>
+                    <a href="skills.html" class="text-sage-600 font-medium">Skills</a>
+                    <a href="contacts.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-gray-700 hover:text-sage-600">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header Section -->
+    <section class="pt-24 pb-12 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12 scroll-animate">
+                <h1 class="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-6">
+                    Skills & Expertise
+                </h1>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive overview of my technical capabilities across web development, 
+                    mobile applications, data science, and creative design.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Development Skills -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6">
+                    Development Skills
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Proficiency in modern programming languages, frameworks, and development tools.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Skills with Progress Bars -->
+                <div class="scroll-animate">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Programming Languages</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">JavaScript / TypeScript</span>
+                                <span class="text-gray-500">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">Python</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">Java / Kotlin</span>
+                                <span class="text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">C# / .NET</span>
+                                <span class="text-gray-500">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">PHP</span>
+                                <span class="text-gray-500">75%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-animate">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Frameworks & Libraries</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">React / Next.js</span>
+                                <span class="text-gray-500">95%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">Vue.js / Nuxt.js</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">Node.js / Express</span>
+                                <span class="text-gray-500">90%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">React Native / Flutter</span>
+                                <span class="text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="font-medium text-gray-700">Django / Flask</span>
+                                <span class="text-gray-500">80%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6">
+                    Technology Stack
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Comprehensive overview of technologies and tools I work with regularly.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Skills Chart -->
+                <div class="scroll-animate">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Skills Distribution</h3>
+                    <div id="skills-chart" class="h-80 bg-gray-50 rounded-lg p-4"></div>
+                </div>
+
+                <!-- Technology Categories -->
+                <div class="scroll-animate">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Technology Categories</h3>
+                    <div class="space-y-6">
+                        <div class="tech-card bg-gray-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-3">Frontend Development</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">HTML5</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">CSS3</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">JavaScript</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">TypeScript</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">React</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Vue.js</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Tailwind CSS</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">SASS</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-card bg-gray-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-3">Backend Development</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Node.js</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Express.js</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Python</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Django</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">PHP</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Laravel</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">GraphQL</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">REST API</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-card bg-gray-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-3">Mobile Development</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">React Native</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Flutter</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Swift</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Kotlin</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Firebase</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">SQLite</span>
+                            </div>
+                        </div>
+
+                        <div class="tech-card bg-gray-50 rounded-lg p-6">
+                            <h4 class="text-lg font-semibold text-gray-900 mb-3">Database & Cloud</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">MySQL</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">PostgreSQL</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">MongoDB</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Redis</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">AWS</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Docker</span>
+                                <span class="px-3 py-1 bg-sage-100 text-sage-700 text-sm rounded-full">Git</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certifications & Learning -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16 scroll-animate">
+                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6">
+                    Certifications & Learning
+                </h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Continuous learning through professional certifications and online courses.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">AWS Certified Developer</h3>
+                    <p class="text-gray-600 text-sm mb-3">Amazon Web Services</p>
+                    <span class="text-sage-600 font-medium text-sm">2024</span>
+                </div>
+
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Google Cloud Professional</h3>
+                    <p class="text-gray-600 text-sm mb-3">Google Cloud Platform</p>
+                    <span class="text-sage-600 font-medium text-sm">2023</span>
+                </div>
+
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">React Professional</h3>
+                    <p class="text-gray-600 text-sm mb-3">Meta (Facebook)</p>
+                    <span class="text-sage-600 font-medium text-sm">2023</span>
+                </div>
+
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Data Science Specialization</h3>
+                    <p class="text-gray-600 text-sm mb-3">Coursera / Johns Hopkins</p>
+                    <span class="text-sage-600 font-medium text-sm">2022</span>
+                </div>
+
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">UI/UX Design Fundamentals</h3>
+                    <p class="text-gray-600 text-sm mb-3">Google UX Design</p>
+                    <span class="text-sage-600 font-medium text-sm">2022</span>
+                </div>
+
+                <div class="certification-badge bg-white rounded-lg p-6 text-center scroll-animate">
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">Agile Development</h3>
+                    <p class="text-gray-600 text-sm mb-3">Scrum Alliance</p>
+                    <span class="text-sage-600 font-medium text-sm">2021</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <div class="mb-8">
+                <h3 class="text-2xl font-display font-bold mb-4">Portfolio</h3>
+                <p class="text-gray-400 max-w-md mx-auto">
+                    Crafting exceptional digital experiences through innovative development and creative design.
+                </p>
+            </div>
+            <div class="border-t border-gray-800 pt-8">
+                <p class="text-gray-400">
+                    © 2024 Professional Portfolio. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Skills Chart Initialization -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize skills chart
+            const chartDom = document.getElementById('skills-chart');
+            if (chartDom) {
+                const myChart = echarts.init(chartDom);
+                const option = {
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    series: [{
+                        name: 'Skills',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#fff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '18',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: [
+                            { value: 35, name: 'Frontend', itemStyle: { color: '#7c8471' } },
+                            { value: 25, name: 'Backend', itemStyle: { color: '#626858' } },
+                            { value: 20, name: 'Mobile', itemStyle: { color: '#4f5449' } },
+                            { value: 15, name: 'Data Science', itemStyle: { color: '#b4bba8' } },
+                            { value: 5, name: 'Design', itemStyle: { color: '#d1d5cc' } }
+                        ]
+                    }]
+                };
+                myChart.setOption(option);
+                
+                // Resize chart on window resize
+                window.addEventListener('resize', function() {
+                    myChart.resize();
+                });
+            }
+
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach((bar, index) => {
+                const width = bar.dataset.width || '80%';
+                anime({
+                    targets: bar,
+                    width: width,
+                    duration: 1000,
+                    easing: 'easeOutExpo',
+                    delay: 200 * index
+                });
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fade-in-up');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.scroll-animate').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
