@@ -3,7 +3,7 @@
 
 class PortfolioManager {
     constructor() {
-        this.projects = [
+        this.defaultProjects = [
             {
                 id: 1,
                 title: "Web Application Dashboard",
@@ -57,19 +57,27 @@ class PortfolioManager {
      
         ];
         
+        this.projects = [];
         this.currentFilter = 'all';
+        this.searchTerm = '';
+        this.sortBy = 'date-desc';
         this.isAdmin = false;
         this.adminPassword = 'toolazytosecure'; // Change this to your desired password
+        this.uploadedFiles = [];
+        this.editingProjectId = null;
         this.init();
     }
 
     init() {
+        this.loadProjects();
         this.setupEventListeners();
         this.initializeAnimations();
-        this.renderProjects();
+        this.applyProjectView();
         this.setupScrollEffects();
         this.initializeParticles();
         this.initializeAdminFeatures();
+        this.initializeUploadFeatures();
+        this.initializeProjectManagement();
     }
 
     setupEventListeners() {
@@ -82,6 +90,7 @@ class PortfolioManager {
 
         // Project cards
         document.addEventListener('click', (e) => {
+            if (e.target.closest('.project-admin-action')) return;
             if (e.target.closest('.project-card')) {
                 const projectId = parseInt(e.target.closest('.project-card').dataset.projectId);
                 this.showProjectModal(projectId);
@@ -119,6 +128,30 @@ class PortfolioManager {
                     });
                 }
             });
+        });
+
+        // Upload files list actions
+        document.addEventListener('click', (e) => {
+            const deleteButton = e.target.closest('.delete-upload-btn');
+            if (!deleteButton) return;
+
+            const fileId = deleteButton.dataset.fileId;
+            this.deleteUploadedFile(fileId);
+        });
+
+        // Project edit and delete actions
+        document.addEventListener('click', (e) => {
+            const editButton = e.target.closest('.edit-project-btn');
+            if (editButton) {
+                this.openProjectModal(parseInt(editButton.dataset.projectId, 10));
+                return;
+            }
+
+            const deleteButton = e.target.closest('.delete-project-btn');
+            if (!deleteButton) return;
+
+            const projectId = parseInt(deleteButton.dataset.projectId, 10);
+            this.deleteProject(projectId);
         });
     }
 
@@ -165,6 +198,8 @@ class PortfolioManager {
             adminLoginBtn.removeEventListener('click', this.showAdminLogin.bind(this));
             adminLoginBtn.addEventListener('click', this.logoutAdmin.bind(this));
         }
+
+        this.applyProjectView();
     }
 
     hideAdminControls() {
@@ -187,6 +222,8 @@ class PortfolioManager {
             adminLoginBtn.removeEventListener('click', this.logoutAdmin.bind(this));
             adminLoginBtn.addEventListener('click', this.showAdminLogin.bind(this));
         }
+
+        this.applyProjectView();
     }
 
     logoutAdmin() {
@@ -194,6 +231,348 @@ class PortfolioManager {
         localStorage.removeItem('portfolioAdmin');
         this.hideAdminControls();
         showNotification('Logged out successfully!', 'info');
+    }
+
+    initializeUploadFeatures() {
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        if (!uploadArea || !fileInput) return;
+
+        this.loadUploadedFiles();
+        this.renderUploadedFiles();
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            this.handleFileUpload(e.target.files);
+            fileInput.value = '';
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            const files = e.dataTransfer?.files || [];
+            this.handleFileUpload(files);
+        });
+    }
+
+    loadUploadedFiles() {
+        try {
+            const storedFiles = localStorage.getItem('portfolioUploadedFiles');
+            this.uploadedFiles = storedFiles ? JSON.parse(storedFiles) : [];
+        } catch (error) {
+            this.uploadedFiles = [];
+        }
+    }
+
+    saveUploadedFiles() {
+        localStorage.setItem('portfolioUploadedFiles', JSON.stringify(this.uploadedFiles));
+    }
+
+    handleFileUpload(fileList) {
+        const files = Array.from(fileList);
+        if (!files.length) return;
+
+        const acceptedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+        const maxSize = 10 * 1024 * 1024;
+
+        files.forEach((file) => {
+            if (!acceptedMimeTypes.includes(file.type)) {
+                showNotification(`"${file.name}" is not supported. Use PNG, JPG, or PDF.`, 'error');
+                return;
+            }
+
+            if (file.size > maxSize) {
+                showNotification(`"${file.name}" exceeds 10MB.`, 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const uploadedFile = {
+                    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    url: event.target?.result || ''
+                };
+
+                this.uploadedFiles.unshift(uploadedFile);
+                this.saveUploadedFiles();
+                this.renderUploadedFiles();
+                showNotification(`Uploaded "${file.name}" successfully.`, 'success');
+            };
+
+            reader.onerror = () => {
+                showNotification(`Failed to upload "${file.name}".`, 'error');
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    formatFileSize(bytes) {
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    renderUploadedFiles() {
+        const uploadedFilesContainer = document.getElementById('uploaded-files');
+        if (!uploadedFilesContainer) return;
+
+        if (!this.uploadedFiles.length) {
+            uploadedFilesContainer.innerHTML = `
+                <div class="col-span-full text-sm text-gray-500 bg-white rounded-lg p-4 text-center border border-gray-200">
+                    No files uploaded yet.
+                </div>
+            `;
+            return;
+        }
+
+        uploadedFilesContainer.innerHTML = this.uploadedFiles.map((file) => `
+            <div class="bg-white rounded-lg border border-gray-200 p-3 relative">
+                <button
+                    class="delete-upload-btn absolute top-2 right-2 text-xs text-red-500 hover:text-red-700"
+                    data-file-id="${file.id}"
+                    type="button"
+                    aria-label="Delete ${file.name}"
+                >
+                    ✕
+                </button>
+                <div class="mb-2 h-20 rounded bg-gray-50 flex items-center justify-center overflow-hidden">
+                    ${file.type === 'application/pdf'
+                        ? '<span class="text-xs font-semibold text-sage-700">PDF</span>'
+                        : `<img src="${file.url}" alt="${file.name}" class="w-full h-full object-cover">`
+                    }
+                </div>
+                <p class="text-xs text-gray-800 truncate" title="${file.name}">${file.name}</p>
+                <p class="text-[11px] text-gray-500">${this.formatFileSize(file.size)}</p>
+            </div>
+        `).join('');
+    }
+
+    deleteUploadedFile(fileId) {
+        this.uploadedFiles = this.uploadedFiles.filter(file => file.id !== fileId);
+        this.saveUploadedFiles();
+        this.renderUploadedFiles();
+        this.populateProjectImageOptions();
+        showNotification('File removed.', 'info');
+    }
+
+    initializeProjectManagement() {
+        const addProjectBtn = document.getElementById('add-project-btn');
+        const projectForm = document.getElementById('add-project-form');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const modal = document.getElementById('add-project-modal');
+        const searchInput = document.getElementById('search-input');
+        const sortSelect = document.getElementById('sort-select');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+
+        if (addProjectBtn) {
+            addProjectBtn.addEventListener('click', () => this.openProjectModal());
+        }
+
+        if (closeModalBtn) closeModalBtn.addEventListener('click', () => this.closeProjectModal());
+        if (cancelBtn) cancelBtn.addEventListener('click', () => this.closeProjectModal());
+
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) this.closeProjectModal();
+            });
+        }
+
+        if (projectForm) {
+            projectForm.addEventListener('submit', (e) => this.handleProjectFormSubmit(e));
+        }
+
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.searchTerm = e.target.value.trim().toLowerCase();
+                this.applyProjectView();
+            });
+        }
+
+        if (sortSelect) {
+            sortSelect.addEventListener('change', (e) => {
+                this.sortBy = e.target.value;
+                this.applyProjectView();
+            });
+        }
+
+        if (loadMoreBtn) {
+            loadMoreBtn.addEventListener('click', () => {
+                showNotification('All projects are already loaded.', 'info');
+            });
+        }
+
+        this.populateProjectImageOptions();
+    }
+
+    loadProjects() {
+        try {
+            const storedProjects = localStorage.getItem('portfolioProjects');
+            this.projects = storedProjects ? JSON.parse(storedProjects) : [...this.defaultProjects];
+        } catch (error) {
+            this.projects = [...this.defaultProjects];
+        }
+    }
+
+    saveProjects() {
+        localStorage.setItem('portfolioProjects', JSON.stringify(this.projects));
+    }
+
+    openProjectModal(projectId = null) {
+        const modal = document.getElementById('add-project-modal');
+        const form = document.getElementById('add-project-form');
+        if (!modal || !form) return;
+
+        this.editingProjectId = projectId;
+        this.populateProjectImageOptions();
+
+        const title = document.getElementById('project-modal-title');
+        const submitText = document.getElementById('project-submit-text');
+
+        if (projectId) {
+            const project = this.projects.find(item => item.id === projectId);
+            if (!project) return;
+
+            form.elements.title.value = project.title;
+            form.elements.category.value = project.category;
+            form.elements.description.value = project.description;
+            form.elements.technologies.value = project.technologies.join(', ');
+            form.elements.date.value = project.date;
+            form.elements.image.value = project.image || '';
+            if (title) title.textContent = 'Edit Project';
+            if (submitText) submitText.textContent = 'Save Changes';
+        } else {
+            form.reset();
+            if (title) title.textContent = 'Add New Project';
+            if (submitText) submitText.textContent = 'Add Project';
+        }
+
+        modal.classList.remove('hidden');
+    }
+
+    closeProjectModal() {
+        const modal = document.getElementById('add-project-modal');
+        const form = document.getElementById('add-project-form');
+        if (modal) modal.classList.add('hidden');
+        if (form) form.reset();
+        this.editingProjectId = null;
+    }
+
+    populateProjectImageOptions() {
+        const imageSelect = document.getElementById('project-image-select');
+        if (!imageSelect) return;
+
+        const imageFiles = this.uploadedFiles.filter(file => file.type.startsWith('image/'));
+        imageSelect.innerHTML = `
+            <option value="">Default portfolio image</option>
+            ${imageFiles.map(file => `<option value="${file.url}">${file.name}</option>`).join('')}
+        `;
+    }
+
+    async handleProjectFormSubmit(e) {
+        e.preventDefault();
+        const form = e.target;
+        const formData = new FormData(form);
+
+        const screenshotFile = formData.get('projectScreenshot');
+        const selectedImage = formData.get('image') || '';
+        let image = selectedImage || 'resources/project-portfolio.jpg';
+
+        if (screenshotFile && screenshotFile.size > 0) {
+            image = await this.readFileAsDataUrl(screenshotFile);
+        }
+
+        const projectData = {
+            title: formData.get('title').trim(),
+            category: formData.get('category'),
+            description: formData.get('description').trim(),
+            technologies: formData.get('technologies').split(',').map(item => item.trim()).filter(Boolean),
+            date: formData.get('date'),
+            image,
+            featured: true
+        };
+
+        if (this.editingProjectId) {
+            this.projects = this.projects.map(project =>
+                project.id === this.editingProjectId ? { ...project, ...projectData } : project
+            );
+            showNotification('Project updated successfully.', 'success');
+        } else {
+            const newId = this.projects.length ? Math.max(...this.projects.map(project => project.id)) + 1 : 1;
+            this.projects.unshift({ id: newId, ...projectData });
+            showNotification('Project added successfully.', 'success');
+        }
+
+        this.saveProjects();
+        this.applyProjectView();
+        this.closeProjectModal();
+    }
+
+    readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = (event) => resolve(event.target?.result || '');
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+        });
+    }
+
+    deleteProject(projectId) {
+        const project = this.projects.find(item => item.id === projectId);
+        if (!project) return;
+
+        if (!confirm(`Delete "${project.title}"?`)) return;
+
+        this.projects = this.projects.filter(item => item.id !== projectId);
+        this.saveProjects();
+        this.applyProjectView();
+        showNotification('Project deleted.', 'info');
+    }
+
+    applyProjectView() {
+        const projectsToRender = this.getFilteredProjects();
+        this.renderProjects(projectsToRender);
+    }
+
+    getFilteredProjects() {
+        let projects = [...this.projects];
+
+        if (this.currentFilter !== 'all') {
+            projects = projects.filter(project => project.category === this.currentFilter);
+        }
+
+        if (this.searchTerm) {
+            projects = projects.filter(project =>
+                project.title.toLowerCase().includes(this.searchTerm) ||
+                project.description.toLowerCase().includes(this.searchTerm) ||
+                project.technologies.join(' ').toLowerCase().includes(this.searchTerm)
+            );
+        }
+
+        projects.sort((a, b) => {
+            if (this.sortBy === 'date-asc') return new Date(a.date) - new Date(b.date);
+            if (this.sortBy === 'title-asc') return a.title.localeCompare(b.title);
+            if (this.sortBy === 'title-desc') return b.title.localeCompare(a.title);
+            return new Date(b.date) - new Date(a.date);
+        });
+
+        return projects;
     }
 
     initializeAnimations() {
@@ -244,6 +623,7 @@ class PortfolioManager {
         if (!container) return;
 
         const projectsToRender = filteredProjects || this.projects;
+        const isProjectsPage = Boolean(document.getElementById('add-project-btn'));
         
         container.innerHTML = projectsToRender.map(project => `
             <div class="project-card group cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl" 
@@ -283,9 +663,15 @@ class PortfolioManager {
                             <span class="text-sm text-gray-500">
                                 ${new Date(project.date).toLocaleDateString()}
                             </span>
-                            <button class="text-sage-600 hover:text-sage-800 font-medium text-sm">
-                                View Details →
-                            </button>
+                            <div class="flex items-center gap-2">
+                                <button class="text-sage-600 hover:text-sage-800 font-medium text-sm">
+                                    View Details →
+                                </button>
+                                ${this.isAdmin && isProjectsPage ? `
+                                <button class="project-admin-action edit-project-btn text-xs px-2 py-1 rounded bg-sage-100 text-sage-700" data-project-id="${project.id}" type="button">Edit</button>
+                                <button class="project-admin-action delete-project-btn text-xs px-2 py-1 rounded bg-red-100 text-red-700" data-project-id="${project.id}" type="button">Delete</button>
+                                ` : ''}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -318,12 +704,7 @@ class PortfolioManager {
             activeBtn.classList.add('bg-sage-600', 'text-white');
         }
 
-        // Filter projects
-        const filteredProjects = filter === 'all' 
-            ? this.projects 
-            : this.projects.filter(project => project.category === filter);
-        
-        this.renderProjects(filteredProjects);
+        this.applyProjectView();
     }
 
     showProjectModal(projectId) {
