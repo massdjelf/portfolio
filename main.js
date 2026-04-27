@@ -311,6 +311,7 @@ class PortfolioManager {
                 this.uploadedFiles.unshift(uploadedFile);
                 this.saveUploadedFiles();
                 this.renderUploadedFiles();
+                this.populateProjectImageOptions();
                 showNotification(`Uploaded "${file.name}" successfully.`, 'success');
             };
 
@@ -454,7 +455,7 @@ class PortfolioManager {
             form.elements.description.value = project.description;
             form.elements.technologies.value = project.technologies.join(', ');
             form.elements.date.value = project.date;
-            form.elements.image.value = project.image || '';
+            form.elements['image-select'] ? form.elements['image-select'].value = project.image || '' : null;
             if (title) title.textContent = 'Edit Project';
             if (submitText) submitText.textContent = 'Save Changes';
         } else {
@@ -491,7 +492,7 @@ class PortfolioManager {
         const formData = new FormData(form);
 
         const screenshotFile = formData.get('projectScreenshot');
-        const selectedImage = formData.get('image') || '';
+        const selectedImage = formData.get('image-select') || '';
         let image = selectedImage || 'resources/project-portfolio.jpg';
 
         if (screenshotFile && screenshotFile.size > 0) {
