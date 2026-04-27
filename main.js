@@ -60,6 +60,7 @@ class PortfolioManager {
         this.currentFilter = 'all';
         this.isAdmin = false;
         this.adminPassword = 'toolazytosecure'; // Change this to your desired password
+        this.uploadedFiles = [];
         this.init();
     }
 
@@ -70,6 +71,7 @@ class PortfolioManager {
         this.setupScrollEffects();
         this.initializeParticles();
         this.initializeAdminFeatures();
+        this.initializeUploadFeatures();
     }
 
     setupEventListeners() {
@@ -119,6 +121,15 @@ class PortfolioManager {
                     });
                 }
             });
+        });
+
+        // Upload files list actions
+        document.addEventListener('click', (e) => {
+            const deleteButton = e.target.closest('.delete-upload-btn');
+            if (!deleteButton) return;
+
+            const fileId = deleteButton.dataset.fileId;
+            this.deleteUploadedFile(fileId);
         });
     }
 
@@ -194,6 +205,143 @@ class PortfolioManager {
         localStorage.removeItem('portfolioAdmin');
         this.hideAdminControls();
         showNotification('Logged out successfully!', 'info');
+    }
+
+    initializeUploadFeatures() {
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        if (!uploadArea || !fileInput) return;
+
+        this.loadUploadedFiles();
+        this.renderUploadedFiles();
+
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', (e) => {
+            this.handleFileUpload(e.target.files);
+            fileInput.value = '';
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            const files = e.dataTransfer?.files || [];
+            this.handleFileUpload(files);
+        });
+    }
+
+    loadUploadedFiles() {
+        try {
+            const storedFiles = localStorage.getItem('portfolioUploadedFiles');
+            this.uploadedFiles = storedFiles ? JSON.parse(storedFiles) : [];
+        } catch (error) {
+            this.uploadedFiles = [];
+        }
+    }
+
+    saveUploadedFiles() {
+        localStorage.setItem('portfolioUploadedFiles', JSON.stringify(this.uploadedFiles));
+    }
+
+    handleFileUpload(fileList) {
+        const files = Array.from(fileList);
+        if (!files.length) return;
+
+        const acceptedMimeTypes = ['image/png', 'image/jpeg', 'image/jpg', 'application/pdf'];
+        const maxSize = 10 * 1024 * 1024;
+
+        files.forEach((file) => {
+            if (!acceptedMimeTypes.includes(file.type)) {
+                showNotification(`"${file.name}" is not supported. Use PNG, JPG, or PDF.`, 'error');
+                return;
+            }
+
+            if (file.size > maxSize) {
+                showNotification(`"${file.name}" exceeds 10MB.`, 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const uploadedFile = {
+                    id: `${Date.now()}-${Math.random().toString(16).slice(2)}`,
+                    name: file.name,
+                    type: file.type,
+                    size: file.size,
+                    url: event.target?.result || ''
+                };
+
+                this.uploadedFiles.unshift(uploadedFile);
+                this.saveUploadedFiles();
+                this.renderUploadedFiles();
+                showNotification(`Uploaded "${file.name}" successfully.`, 'success');
+            };
+
+            reader.onerror = () => {
+                showNotification(`Failed to upload "${file.name}".`, 'error');
+            };
+
+            reader.readAsDataURL(file);
+        });
+    }
+
+    formatFileSize(bytes) {
+        if (bytes < 1024) return `${bytes} B`;
+        if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+        return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    renderUploadedFiles() {
+        const uploadedFilesContainer = document.getElementById('uploaded-files');
+        if (!uploadedFilesContainer) return;
+
+        if (!this.uploadedFiles.length) {
+            uploadedFilesContainer.innerHTML = `
+                <div class="col-span-full text-sm text-gray-500 bg-white rounded-lg p-4 text-center border border-gray-200">
+                    No files uploaded yet.
+                </div>
+            `;
+            return;
+        }
+
+        uploadedFilesContainer.innerHTML = this.uploadedFiles.map((file) => `
+            <div class="bg-white rounded-lg border border-gray-200 p-3 relative">
+                <button
+                    class="delete-upload-btn absolute top-2 right-2 text-xs text-red-500 hover:text-red-700"
+                    data-file-id="${file.id}"
+                    type="button"
+                    aria-label="Delete ${file.name}"
+                >
+                    ✕
+                </button>
+                <div class="mb-2 h-20 rounded bg-gray-50 flex items-center justify-center overflow-hidden">
+                    ${file.type === 'application/pdf'
+                        ? '<span class="text-xs font-semibold text-sage-700">PDF</span>'
+                        : `<img src="${file.url}" alt="${file.name}" class="w-full h-full object-cover">`
+                    }
+                </div>
+                <p class="text-xs text-gray-800 truncate" title="${file.name}">${file.name}</p>
+                <p class="text-[11px] text-gray-500">${this.formatFileSize(file.size)}</p>
+            </div>
+        `).join('');
+    }
+
+    deleteUploadedFile(fileId) {
+        this.uploadedFiles = this.uploadedFiles.filter(file => file.id !== fileId);
+        this.saveUploadedFiles();
+        this.renderUploadedFiles();
+        showNotification('File removed.', 'info');
     }
 
     initializeAnimations() {
