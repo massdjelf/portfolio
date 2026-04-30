@@ -96,12 +96,19 @@
                     <a href="contacts.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
                 </div>
                 <div class="md:hidden">
-                    <button class="text-gray-700 hover:text-sage-600">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-sage-600" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-gray-100 pt-4 space-y-3">
+                <a href="#certifications" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Certifications</a>
+                <a href="index.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Home</a>
+                <a href="projects.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Projects</a>
+                <a href="skills.html" class="block text-sage-600 font-medium">Skills</a>
+                <a href="contacts.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
             </div>
         </div>
     </nav>
@@ -344,10 +351,11 @@
                     <input type="text" name="title" placeholder="Certification title" required class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="text" name="issuer" placeholder="Issuer (e.g. Google)" required class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="number" name="year" placeholder="Year" min="2000" max="2100" required class="px-4 py-3 border border-gray-300 rounded-lg">
-                    <input type="url" name="imageUrl" placeholder="Optional image URL" class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="url" name="imageUrl" placeholder="Optional image URL (e.g. assets/cert.png)" class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="file" name="imageFile" accept="image/*" class="px-4 py-3 border border-gray-300 rounded-lg md:col-span-2">
-                    <button type="submit" class="md:col-span-2 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 font-semibold">Add Certification</button>
+                    <button type="submit" class="md:col-span-2 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 font-semibold">Confirm & Add Certification</button>
                 </form>
+                <p class="text-sm text-gray-500 mt-3">Tip: for shared certifications, add images under <code>resources/certifications</code> and update <code>certifications.json</code> (or use <code>node scripts/manage-certifications.js add ...</code>).</p>
             </div>
 
             <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
@@ -374,128 +382,6 @@
     <!-- Skills Chart Initialization -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const certAdminPassword = 'toolazytosecure';
-            const certAdminBtn = document.getElementById('cert-admin-btn');
-            const certAdminPanel = document.getElementById('cert-admin-panel');
-            const certAdminNote = document.getElementById('cert-admin-note');
-            const certGrid = document.getElementById('certifications-grid');
-            const certForm = document.getElementById('cert-form');
-
-            const defaultCertifications = [
-                { id: 1, title: 'AWS Certified Developer', issuer: 'Amazon Web Services', year: '2024', image: '' },
-                { id: 2, title: 'Google Cloud Professional', issuer: 'Google Cloud Platform', year: '2023', image: '' },
-                { id: 3, title: 'React Professional', issuer: 'Meta (Facebook)', year: '2023', image: '' },
-                { id: 4, title: 'Data Science Specialization', issuer: 'Coursera / Johns Hopkins', year: '2022', image: '' },
-                { id: 5, title: 'UI/UX Design Fundamentals', issuer: 'Google UX Design', year: '2022', image: '' },
-                { id: 6, title: 'Agile Development', issuer: 'Scrum Alliance', year: '2021', image: '' }
-            ];
-
-            let isCertAdmin = localStorage.getItem('portfolioAdmin') === 'true';
-            let certifications = loadCertifications();
-
-            function loadCertifications() {
-                try {
-                    const stored = localStorage.getItem('portfolioCertifications');
-                    return stored ? JSON.parse(stored) : defaultCertifications;
-                } catch (err) {
-                    return defaultCertifications;
-                }
-            }
-
-            function saveCertifications() {
-                localStorage.setItem('portfolioCertifications', JSON.stringify(certifications));
-            }
-
-            function showLocalNotification(message, isError = false) {
-                const div = document.createElement('div');
-                div.className = `fixed top-4 right-4 z-50 px-4 py-3 rounded-lg text-white ${isError ? 'bg-red-500' : 'bg-sage-600'}`;
-                div.textContent = message;
-                document.body.appendChild(div);
-                setTimeout(() => div.remove(), 2500);
-            }
-
-            function renderCertifications() {
-                certGrid.innerHTML = certifications.map((cert) => `
-                    <div class="certification-badge bg-white rounded-lg p-6 text-center relative">
-                        ${isCertAdmin ? `<button type="button" data-cert-id="${cert.id}" class="delete-cert-btn absolute top-3 right-3 text-red-500 hover:text-red-700">✕</button>` : ''}
-                        <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                            ${cert.image ? `<img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover">` : `
-                            <svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                            </svg>`}
-                        </div>
-                        <h3 class="text-lg font-bold text-gray-900 mb-2">${cert.title}</h3>
-                        <p class="text-gray-600 text-sm mb-3">${cert.issuer}</p>
-                        <span class="text-sage-600 font-medium text-sm">${cert.year}</span>
-                    </div>
-                `).join('');
-            }
-
-            function updateCertAdminUI() {
-                certAdminPanel.classList.toggle('hidden', !isCertAdmin);
-                certAdminBtn.textContent = isCertAdmin ? 'Certification Admin Logout' : 'Certification Admin Login';
-                certAdminBtn.classList.toggle('bg-gray-700', !isCertAdmin);
-                certAdminBtn.classList.toggle('bg-red-600', isCertAdmin);
-                certAdminNote.textContent = isCertAdmin ? 'Admin mode enabled: you can add and remove certifications.' : 'Login to add or remove certifications.';
-                renderCertifications();
-            }
-
-            certAdminBtn.addEventListener('click', () => {
-                if (isCertAdmin) {
-                    isCertAdmin = false;
-                    updateCertAdminUI();
-                    return;
-                }
-
-                const password = prompt('Enter admin password:');
-                if (password === certAdminPassword) {
-                    isCertAdmin = true;
-                    updateCertAdminUI();
-                } else {
-                    showLocalNotification('Incorrect password.', true);
-                }
-            });
-
-            certForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const formData = new FormData(certForm);
-                const imageFile = formData.get('imageFile');
-                let image = formData.get('imageUrl') || '';
-
-                if (imageFile && imageFile.size > 0) {
-                    image = await new Promise((resolve, reject) => {
-                        const reader = new FileReader();
-                        reader.onload = (event) => resolve(event.target?.result || '');
-                        reader.onerror = reject;
-                        reader.readAsDataURL(imageFile);
-                    });
-                }
-
-                const newCert = {
-                    id: Date.now(),
-                    title: formData.get('title').trim(),
-                    issuer: formData.get('issuer').trim(),
-                    year: String(formData.get('year')).trim(),
-                    image
-                };
-
-                certifications.unshift(newCert);
-                saveCertifications();
-                certForm.reset();
-                renderCertifications();
-                showLocalNotification('Certification added.');
-            });
-
-            certGrid.addEventListener('click', (e) => {
-                const deleteBtn = e.target.closest('.delete-cert-btn');
-                if (!deleteBtn || !isCertAdmin) return;
-
-                const certId = Number(deleteBtn.dataset.certId);
-                certifications = certifications.filter((cert) => cert.id !== certId);
-                saveCertifications();
-                renderCertifications();
-            });
-
             // Initialize skills chart
             const chartDom = document.getElementById('skills-chart');
             if (chartDom) {
@@ -576,8 +462,8 @@
                 observer.observe(el);
             });
 
-            updateCertAdminUI();
         });
     </script>
+    <script src="main.js"></script>
 </body>
 </html>
