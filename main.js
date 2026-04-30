@@ -58,6 +58,13 @@ class PortfolioManager {
         ];
         
         this.projects = [];
+        this.defaultCertifications = [
+            { id: 1, title: 'Responsive Web Design', issuer: 'freeCodeCamp', year: '2024', image: '' },
+            { id: 2, title: 'Python for Data Analysis', issuer: 'Coursera', year: '2024', image: '' },
+            { id: 3, title: 'Android App Development', issuer: 'Google Career Certificate', year: '2025', image: '' }
+        ];
+        this.certifications = [];
+        this.isCertAdmin = false;
         this.currentFilter = 'all';
         this.searchTerm = '';
         this.sortBy = 'date-desc';
@@ -79,6 +86,108 @@ class PortfolioManager {
         this.initializeAdminFeatures();
         this.initializeUploadFeatures();
         this.initializeProjectManagement();
+        this.initializeCertificationFeatures();
+    }
+    initializeCertificationFeatures() {
+        const certGrid = document.getElementById('certifications-grid');
+        if (!certGrid) return;
+        const certAdminBtn = document.getElementById('cert-admin-btn');
+        const certAdminPanel = document.getElementById('cert-admin-panel');
+        const certAdminNote = document.getElementById('cert-admin-note');
+        const certForm = document.getElementById('cert-form');
+        this.isCertAdmin = localStorage.getItem('portfolioAdmin') === 'true';
+        this.certifications = this.loadCertifications();
+
+        const renderCertifications = () => {
+            certGrid.innerHTML = this.certifications.map((cert) => `
+                <div class="certification-badge bg-white rounded-lg p-6 text-center relative border border-gray-100">
+                    ${this.isCertAdmin ? `<button type="button" data-cert-id="${cert.id}" class="delete-cert-btn absolute top-3 right-3 text-red-500 hover:text-red-700">✕</button>` : ''}
+                    <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
+                        ${cert.image ? `<img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover">` : `<svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>`}
+                    </div>
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">${cert.title}</h3>
+                    <p class="text-gray-600 text-sm mb-3">${cert.issuer}</p>
+                    <span class="text-sage-600 font-medium text-sm">${cert.year}</span>
+                </div>`).join('');
+        };
+        const refreshAdminUI = () => {
+            if (certAdminPanel) certAdminPanel.classList.toggle('hidden', !this.isCertAdmin);
+            if (certAdminBtn) certAdminBtn.textContent = this.isCertAdmin ? 'Certification Admin Logout' : 'Certification Admin Login';
+            if (certAdminNote) certAdminNote.textContent = this.isCertAdmin ? 'Admin mode enabled: you can add and remove certifications.' : 'Login to add or remove certifications.';
+            renderCertifications();
+        };
+        if (certAdminBtn) {
+            certAdminBtn.addEventListener('click', () => {
+                if (this.isCertAdmin) {
+                    this.isCertAdmin = false;
+                    refreshAdminUI();
+                    return;
+                }
+                this.showAdminLogin();
+                this.isCertAdmin = this.isAdmin;
+                refreshAdminUI();
+            });
+        }
+        certGrid.addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('.delete-cert-btn');
+            if (!deleteBtn || !this.isCertAdmin) return;
+            const certId = Number(deleteBtn.dataset.certId);
+            this.certifications = this.certifications.filter((cert) => cert.id !== certId);
+            this.saveCertifications();
+            renderCertifications();
+        });
+        if (certForm) {
+            certForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!this.isCertAdmin) return;
+                const formData = new FormData(certForm);
+                const imageFile = formData.get('imageFile');
+                let image = formData.get('imageUrl') || '';
+                if (imageFile && imageFile.size > 0) {
+                    image = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (event) => resolve(event.target?.result || '');
+                        reader.onerror = reject;
+                        reader.readAsDataURL(imageFile);
+                    });
+                }
+                this.certifications.unshift({ id: Date.now(), title: formData.get('title').trim(), issuer: formData.get('issuer').trim(), year: String(formData.get('year')).trim(), image });
+                this.saveCertifications();
+                certForm.reset();
+                renderCertifications();
+            });
+        }
+        refreshAdminUI();
+    }
+    loadCertifications() {
+        try {
+            const stored = localStorage.getItem('portfolioCertifications');
+            return stored ? JSON.parse(stored) : this.defaultCertifications;
+        } catch (err) {
+            return this.defaultCertifications;
+        }
+    }
+    saveCertifications() {
+        localStorage.setItem('portfolioCertifications', JSON.stringify(this.certifications));
+    }
+
+    async loadEnvConfig() {
+        try {
+            const response = await fetch('.env');
+            if (!response.ok) return;
+            const envText = await response.text();
+            envText.split('\n').forEach((line) => {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith('#')) return;
+                const [key, ...valueParts] = trimmed.split('=');
+                const value = valueParts.join('=').trim();
+                if (key.trim() === 'ADMIN_PASSWORD') {
+                    this.adminPassword = value;
+                }
+            });
+        } catch (error) {
+            // Ignore when .env is not available
+        }
     }
 
     async loadEnvConfig() {

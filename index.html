@@ -203,21 +203,24 @@
                     Professional certifications that validate my skills in development, design, and data.
                 </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate">
+            <div class="flex flex-col lg:flex-row gap-4 items-start mb-8 scroll-animate">
+                <button id="cert-admin-btn" class="px-5 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-800 transition-colors">Certification Admin Login</button>
+                <p id="cert-admin-note" class="text-sm text-gray-600">Login to add or remove certifications.</p>
+            </div>
+            <div id="cert-admin-panel" class="bg-gray-50 rounded-lg p-6 mb-8 hidden scroll-animate">
+                <h3 class="text-xl font-bold text-gray-900 mb-4">Add Certification</h3>
+                <form id="cert-form" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <input type="text" name="title" placeholder="Certification title" required class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="text" name="issuer" placeholder="Issuer (e.g. Google)" required class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="number" name="year" placeholder="Year" min="2000" max="2100" required class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="url" name="imageUrl" placeholder="Optional image URL" class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="file" name="imageFile" accept="image/*" class="px-4 py-3 border border-gray-300 rounded-lg md:col-span-2">
+                    <button type="submit" class="md:col-span-2 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 font-semibold">Add Certification</button>
+                </form>
+            </div>
+            <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate">
                 <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover-lift">
-                    <p class="text-sm text-sage-600 font-semibold mb-2">Web Development</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Responsive Web Design</h3>
-                    <p class="text-gray-600 mb-4">freeCodeCamp • 2024</p>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover-lift">
-                    <p class="text-sm text-sage-600 font-semibold mb-2">Data Science</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Python for Data Analysis</h3>
-                    <p class="text-gray-600 mb-4">Coursera • 2024</p>
-                </div>
-                <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover-lift">
-                    <p class="text-sm text-sage-600 font-semibold mb-2">Mobile Development</p>
-                    <h3 class="text-xl font-bold text-gray-900 mb-2">Android App Development</h3>
-                    <p class="text-gray-600 mb-4">Google Career Certificate • 2025</p>
+                    <p class="text-gray-600">Certifications are loading...</p>
                 </div>
             </div>
         </div>
