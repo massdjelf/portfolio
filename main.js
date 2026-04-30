@@ -188,6 +188,9 @@ class PortfolioManager {
         } catch (error) {
             // Ignore when .env is not available
         }
+        if (!this.adminPassword) {
+            this.adminPassword = localStorage.getItem('portfolioAdminPassword') || null;
+        }
     }
 
     setupEventListeners() {
@@ -288,8 +291,14 @@ class PortfolioManager {
 
     showAdminLogin() {
         if (!this.adminPassword) {
-            showNotification('Admin password is missing. Add ADMIN_PASSWORD in .env.', 'error');
-            return;
+            const newPassword = prompt('ADMIN_PASSWORD not found. Set a temporary admin password for this browser:');
+            if (!newPassword || !newPassword.trim()) {
+                showNotification('Admin password setup canceled.', 'error');
+                return;
+            }
+            this.adminPassword = newPassword.trim();
+            localStorage.setItem('portfolioAdminPassword', this.adminPassword);
+            showNotification('Temporary admin password saved for this browser.', 'success');
         }
         const password = prompt('Enter admin password:');
         if (password === this.adminPassword) {
