@@ -190,25 +190,6 @@ class PortfolioManager {
         }
     }
 
-    async loadEnvConfig() {
-        try {
-            const response = await fetch('.env');
-            if (!response.ok) return;
-            const envText = await response.text();
-            envText.split('\n').forEach((line) => {
-                const trimmed = line.trim();
-                if (!trimmed || trimmed.startsWith('#')) return;
-                const [key, ...valueParts] = trimmed.split('=');
-                const value = valueParts.join('=').trim();
-                if (key.trim() === 'ADMIN_PASSWORD') {
-                    this.adminPassword = value;
-                }
-            });
-        } catch (error) {
-            // Ignore when .env is not available
-        }
-    }
-
     setupEventListeners() {
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
