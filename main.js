@@ -62,13 +62,14 @@ class PortfolioManager {
         this.searchTerm = '';
         this.sortBy = 'date-desc';
         this.isAdmin = false;
-        this.adminPassword = 'toolazytosecure'; // Change this to your desired password
+        this.adminPassword = null;
         this.uploadedFiles = [];
         this.editingProjectId = null;
         this.init();
     }
 
-    init() {
+    async init() {
+        await this.loadEnvConfig();
         this.loadProjects();
         this.setupEventListeners();
         this.initializeAnimations();
@@ -80,7 +81,36 @@ class PortfolioManager {
         this.initializeProjectManagement();
     }
 
+    async loadEnvConfig() {
+        try {
+            const response = await fetch('.env');
+            if (!response.ok) return;
+            const envText = await response.text();
+            envText.split('\n').forEach((line) => {
+                const trimmed = line.trim();
+                if (!trimmed || trimmed.startsWith('#')) return;
+                const [key, ...valueParts] = trimmed.split('=');
+                const value = valueParts.join('=').trim();
+                if (key.trim() === 'ADMIN_PASSWORD') {
+                    this.adminPassword = value;
+                }
+            });
+        } catch (error) {
+            // Ignore when .env is not available
+        }
+    }
+
     setupEventListeners() {
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = !mobileMenu.classList.contains('hidden');
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', (!isOpen).toString());
+            });
+        }
+
         // Filter buttons
         document.querySelectorAll('.filter-btn').forEach(btn => {
             btn.addEventListener('click', (e) => {
@@ -167,6 +197,10 @@ class PortfolioManager {
     }
 
     showAdminLogin() {
+        if (!this.adminPassword) {
+            showNotification('Admin password is missing. Add ADMIN_PASSWORD in .env.', 'error');
+            return;
+        }
         const password = prompt('Enter admin password:');
         if (password === this.adminPassword) {
             this.isAdmin = true;
