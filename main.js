@@ -64,6 +64,7 @@ class PortfolioManager {
             { id: 3, title: 'Android App Development', issuer: 'Google Career Certificate', year: '2025', image: '' }
         ];
         this.certifications = [];
+        this.sharedCertifications = [];
         this.isCertAdmin = false;
         this.currentFilter = 'all';
         this.searchTerm = '';
@@ -77,6 +78,7 @@ class PortfolioManager {
 
     async init() {
         await this.loadEnvConfig();
+        await this.loadSharedCertifications();
         this.loadProjects();
         this.setupEventListeners();
         this.initializeAnimations();
@@ -155,12 +157,14 @@ class PortfolioManager {
                 this.saveCertifications();
                 certForm.reset();
                 renderCertifications();
+                showNotification('Certification saved. If you used a file upload, it is saved in this browser only.', 'success');
             });
         }
         refreshAdminUI();
     }
     loadCertifications() {
         try {
+            if (this.sharedCertifications.length) return this.sharedCertifications;
             const stored = localStorage.getItem('portfolioCertifications');
             return stored ? JSON.parse(stored) : this.defaultCertifications;
         } catch (err) {
@@ -169,6 +173,16 @@ class PortfolioManager {
     }
     saveCertifications() {
         localStorage.setItem('portfolioCertifications', JSON.stringify(this.certifications));
+    }
+    async loadSharedCertifications() {
+        try {
+            const response = await fetch('certifications.json', { cache: 'no-store' });
+            if (!response.ok) return;
+            const data = await response.json();
+            if (Array.isArray(data)) {
+                this.sharedCertifications = data;
+            }
+        } catch (error) {}
     }
 
     async loadEnvConfig() {
@@ -362,6 +376,7 @@ class PortfolioManager {
     logoutAdmin() {
         this.isAdmin = false;
         localStorage.removeItem('portfolioAdmin');
+        localStorage.removeItem('portfolioCertAdmin');
         this.hideAdminControls();
         showNotification('Logged out successfully!', 'info');
     }

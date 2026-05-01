@@ -213,10 +213,11 @@
                     <input type="text" name="title" placeholder="Certification title" required class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="text" name="issuer" placeholder="Issuer (e.g. Google)" required class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="number" name="year" placeholder="Year" min="2000" max="2100" required class="px-4 py-3 border border-gray-300 rounded-lg">
-                    <input type="url" name="imageUrl" placeholder="Optional image URL" class="px-4 py-3 border border-gray-300 rounded-lg">
+                    <input type="url" name="imageUrl" placeholder="Optional image URL (e.g. assets/cert.png)" class="px-4 py-3 border border-gray-300 rounded-lg">
                     <input type="file" name="imageFile" accept="image/*" class="px-4 py-3 border border-gray-300 rounded-lg md:col-span-2">
-                    <button type="submit" class="md:col-span-2 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 font-semibold">Add Certification</button>
+                    <button type="submit" class="md:col-span-2 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 font-semibold">Confirm & Add Certification</button>
                 </form>
+                <p class="text-sm text-gray-500 mt-3">Tip: for shared certifications, add images under <code>resources/certifications</code> and update <code>certifications.json</code> (or use <code>node scripts/manage-certifications.js add ...</code>).</p>
             </div>
             <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate">
                 <div class="bg-gray-50 rounded-2xl p-6 border border-gray-100 hover-lift">
