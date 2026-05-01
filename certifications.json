@@ -27,39 +27,5 @@
     "year": "2026",
     "image": "resources/certifications/cursa1"
   },
-  {
-    "id": 1777662316973,
-    "title": "fullstack app using react-JWT",
-    "issuer": "Cursa",
-    "year": "2026",
-    "image": "resources/certifications/cursa"
-  },
-  {
-    "id": 1777662004603,
-    "title": "Geospatial analyst",
-    "issuer": "kaggle",
-    "year": "2026",
-    "image": "resources/certifications/kaggle"
-  },
-  {
-    "id": 1,
-    "title": "Responsive Web Design",
-    "issuer": "freeCodeCamp",
-    "year": "2024",
-    "image": ""
-  },
-  {
-    "id": 2,
-    "title": "Python for Data Analysis",
-    "issuer": "Coursera",
-    "year": "2024",
-    "image": ""
-  },
-  {
-    "id": 3,
-    "title": "Android App Development",
-    "issuer": "Google Career Certificate",
-    "year": "2025",
-    "image": ""
-  }
+
 ]
