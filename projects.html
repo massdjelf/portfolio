@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Professional Portfolio</title>
-    <meta name="description" content="Comprehensive project gallery showcasing web development, mobile apps, design work, and data science projects with full management capabilities.">
-    
+    <meta name="description" content="Comprehensive project gallery showcasing web development, mobile apps, design work, and data science projects.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,96 +35,55 @@
             }
         }
     </script>
-    
+
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-    
+
     <!-- Custom Styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         .line-clamp-3 {
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
+
         .animate-fade-in-up {
             animation: fadeInUp 0.6s ease-out forwards;
         }
-        
+
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .scroll-animate {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
-        
+
         .scroll-animate.animate-fade-in-up {
             opacity: 1;
             transform: translateY(0);
         }
-        
+
         .project-card {
             transition: all 0.3s ease;
         }
-        
+
         .project-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(124, 132, 113, 0.15);
         }
-        
+
         .filter-btn {
             transition: all 0.3s ease;
-        }
-        
-        .upload-area {
-            border: 2px dashed #d1d5cc;
-            transition: all 0.3s ease;
-        }
-        
-        .upload-area.dragover {
-            border-color: #7c8471;
-            background-color: #f6f7f5;
-        }
-        
-        .timeline-item {
-            position: relative;
-        }
-        
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: 20px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: #e8eae6;
-        }
-        
-        .timeline-item:last-child::before {
-            display: none;
-        }
-        
-        .timeline-dot {
-            position: relative;
-            z-index: 1;
-            background: white;
-            border: 3px solid #7c8471;
         }
     </style>
 </head>
@@ -162,53 +121,9 @@
                     Project Gallery
                 </h1>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Explore my comprehensive collection of projects spanning web development, 
+                    Explore my comprehensive collection of projects spanning web development,
                     mobile applications, data science, and creative design work.
                 </p>
-            </div>
-
-            <!-- Project Management Interface -->
-            <div class="bg-gray-50 rounded-2xl p-8 mb-12 scroll-animate">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8">
-                    <div>
-                        <h2 class="text-2xl font-bold text-gray-900 mb-2">Project Management</h2>
-                        <p class="text-gray-600">Add new projects, upload screenshots, and manage your portfolio content.</p>
-                    </div>
-                    <div class="flex gap-4 mt-4 lg:mt-0">
-                        <button id="admin-login-btn" class="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors font-semibold">
-                            Admin Login
-                        </button>
-                        <button id="add-project-btn" class="px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors font-semibold admin-only hidden">
-                            + Add New Project
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Admin Info Message -->
-                <div id="admin-info" class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 text-blue-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        <div>
-                            <p class="text-blue-800 font-medium">Admin Access Required</p>
-                            <p class="text-blue-600 text-sm">Click "Admin Login" to access project management features.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- File Upload Area -->
-                <div class="upload-area rounded-lg p-8 text-center mb-6 admin-only hidden" id="upload-area">
-                    <svg class="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
-                    </svg>
-                    <p class="text-gray-600 mb-2">Drop files here or click to upload</p>
-                    <p class="text-sm text-gray-500">PNG, JPG, PDF up to 10MB</p>
-                    <input type="file" id="file-input" class="hidden" multiple accept="image/*,.pdf">
-                </div>
-
-                <!-- Uploaded Files -->
-                <div id="uploaded-files" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 admin-only hidden"></div>
             </div>
         </div>
     </section>
@@ -239,7 +154,7 @@
                 <!-- Search and Sort -->
                 <div class="flex flex-col sm:flex-row gap-4">
                     <div class="relative">
-                        <input type="text" id="search-input" placeholder="Search projects..." 
+                        <input type="text" id="search-input" placeholder="Search projects..."
                                class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
                         <svg class="w-5 h-5 text-gray-400 absolute left-3 top-1/2 transform -translate-y-1/2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
@@ -262,15 +177,9 @@
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Projects will be populated by JavaScript -->
             </div>
-
-            <!-- Load More Button -->
-            <div class="text-center mt-12">
-                <button id="load-more-btn" class="px-8 py-4 bg-white border-2 border-sage-600 text-sage-600 rounded-lg hover:bg-sage-50 transition-all duration-300 font-semibold hover:shadow-lg">
-                    Load More Projects
-                </button>
-            </div>
         </div>
     </section>
+
     <!-- Project Statistics -->
     <section class="py-20 bg-gray-50">
         <div class="max-w-6xl mx-auto px-6">
@@ -321,139 +230,47 @@
             </div>
             <div class="border-t border-gray-800 pt-8">
                 <p class="text-gray-400">
-                    © 2025 Professional Portfolio. All rights reserved.
+                    © 2026 Professional Portfolio. All rights reserved.
                 </p>
             </div>
         </div>
     </footer>
 
-    <!-- Add Project Modal -->
-    <div id="add-project-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 hidden">
-        <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div class="p-6 border-b border-gray-200">
-                <div class="flex justify-between items-center">
-                    <h2 id="project-modal-title" class="text-2xl font-bold text-gray-900">Add New Project</h2>
-                    <button id="close-modal-btn" class="text-gray-500 hover:text-gray-700">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="p-6">
-                <form id="add-project-form" class="space-y-6">
-                    <div>
-                        <label for="project-title" class="block text-sm font-medium text-gray-700 mb-2">Project Title</label>
-                        <input type="text" id="project-title" name="title" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                    </div>
-                    <div>
-                        <label for="project-category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                        <select id="project-category" name="category" required 
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                            <option value="web">Web Development</option>
-                            <option value="mobile">Mobile App</option>
-                            <option value="design">Design</option>
-                            <option value="data">Data Science</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="project-description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
-                        <textarea id="project-description" name="description" rows="4" required 
-                                  class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500 resize-none"></textarea>
-                    </div>
-                    <div>
-                        <label for="project-technologies" class="block text-sm font-medium text-gray-700 mb-2">Technologies (comma-separated)</label>
-                        <input type="text" id="project-technologies" name="technologies" placeholder="React, Node.js, MongoDB" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                    </div>
-                    <div>
-                        <label for="project-date" class="block text-sm font-medium text-gray-700 mb-2">Project Date</label>
-                        <input type="date" id="project-date" name="date" required 
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                    </div>
-                    <div>
-                        <label for="project-image-select" class="block text-sm font-medium text-gray-700 mb-2">Choose Uploaded Screenshot</label>
-                        <select id="project-image-select" name="image" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                            <option value="">Default portfolio image</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="project-screenshot-file" class="block text-sm font-medium text-gray-700 mb-2">Or Upload New Screenshot</label>
-                        <input type="file" id="project-screenshot-file" name="projectScreenshot" accept="image/*"
-                               class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sage-500 focus:border-sage-500">
-                    </div>
-                    <div class="flex gap-4">
-                        <button type="submit" 
-                                class="flex-1 px-6 py-3 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-colors font-semibold">
-                            <span id="project-submit-text">Add Project</span>
-                        </button>
-                        <button type="button" id="cancel-btn" 
-                                class="flex-1 px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors font-semibold">
-                            Cancel
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <!-- Main JavaScript -->
     <script src="main.js"></script>
-    
+
     <!-- Projects Page Specific JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Initialize category chart
             const chartDom = document.getElementById('category-chart');
             if (chartDom) {
                 const myChart = echarts.init(chartDom);
                 const option = {
-                    tooltip: {
-                        trigger: 'item',
-                        formatter: '{a} <br/>{b}: {c} ({d}%)'
-                    },
+                    tooltip: { trigger: 'item', formatter: '{a} <br/>{b}: {c} ({d}%)' },
                     legend: {
                         orient: 'vertical',
                         left: 'left',
                         data: ['Web Development', 'Mobile Apps', 'Design', 'Data Science']
                     },
-                    series: [
-                        {
-                            name: 'Projects',
-                            type: 'pie',
-                            radius: ['50%', '30%'],
-                            avoidLabelOverlap: false,
-                            label: {
-                                show: false,
-                                position: 'center'
-                            },
-                            emphasis: {
-                                label: {
-                                    show: true,
-                                    fontSize: '18',
-                                    fontWeight: 'bold'
-                                }
-                            },
-                            labelLine: {
-                                show: false
-                            },
-                            data: [
-                                { value: 12, name: 'Web Development', itemStyle: { color: '#7c8471' } },
-                                { value: 6, name: 'Mobile Apps', itemStyle: { color: '#626858' } },
-                                { value: 4, name: 'Design', itemStyle: { color: '#4f5449' } },
-                                { value: 3, name: 'Data Science', itemStyle: { color: '#b4bba8' } }
-                            ]
-                        }
-                    ]
+                    series: [{
+                        name: 'Projects',
+                        type: 'pie',
+                        radius: ['50%', '30%'],
+                        avoidLabelOverlap: false,
+                        label: { show: false, position: 'center' },
+                        emphasis: { label: { show: true, fontSize: '18', fontWeight: 'bold' } },
+                        labelLine: { show: false },
+                        data: [
+                            { value: 12, name: 'Web Development', itemStyle: { color: '#7c8471' } },
+                            { value: 6, name: 'Mobile Apps', itemStyle: { color: '#626858' } },
+                            { value: 4, name: 'Design', itemStyle: { color: '#4f5449' } },
+                            { value: 3, name: 'Data Science', itemStyle: { color: '#b4bba8' } }
+                        ]
+                    }]
                 };
                 myChart.setOption(option);
-                
-                window.addEventListener('resize', function() {
-                    myChart.resize();
-                });
+                window.addEventListener('resize', function() { myChart.resize(); });
             }
-
         });
     </script>
 </body>

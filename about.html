@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Professional Portfolio</title>
-    <meta name="description" content="Learn about my background, skills, experience, and journey as a creative developer and digital designer.">
-    
+    <meta name="description" content="Learn about my background, experience, and journey as a creative developer and digital designer.">
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -35,66 +35,63 @@
             }
         }
     </script>
-    
+
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-    
+
     <!-- Custom Styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        
+
         .animate-fade-in-up {
             animation: fadeInUp 0.6s ease-out forwards;
         }
-        
+
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .scroll-animate {
             opacity: 0;
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
-        
+
         .scroll-animate.animate-fade-in-up {
             opacity: 1;
             transform: translateY(0);
         }
-        
-        .skill-bar {
-            width: 0%;
-            transition: width 1s ease-out;
-        }
-        
+
         .text-gradient {
             background: linear-gradient(135deg, #7c8471, #4f5449);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
+
         .experience-card {
             transition: all 0.3s ease;
         }
-        
+
         .experience-card:hover {
             transform: translateY(-4px);
             box-shadow: 0 10px 30px rgba(124, 132, 113, 0.1);
         }
-        
+
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
         .timeline-item {
             position: relative;
         }
-        
+
         .timeline-item::before {
             content: '';
             position: absolute;
@@ -104,18 +101,18 @@
             width: 2px;
             background: #e8eae6;
         }
-        
+
         .timeline-item:last-child::before {
             display: none;
         }
-        
+
         .timeline-dot {
             position: relative;
             z-index: 1;
             background: white;
             border: 3px solid #7c8471;
         }
-        
+
         .parallax-bg {
             background: linear-gradient(135deg, rgba(124, 132, 113, 0.05) 0%, rgba(255, 255, 255, 0.95) 100%),
                         url('resources/pattern-1.jpg') center/cover no-repeat;
@@ -136,7 +133,7 @@
                     <a href="index.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Home</a>
                     <a href="projects.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Projects</a>
                     <a href="about.html" class="text-sage-600 font-medium">About</a>
-                    <a href="index.html#contact" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
+                    <a href="contacts.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
                 </div>
                 <div class="md:hidden">
                     <button class="text-gray-700 hover:text-sage-600">
@@ -158,12 +155,12 @@
                         About <span class="text-gradient">Me</span>
                     </h1>
                     <p class="text-xl text-gray-600 mb-8 leading-relaxed">
-                        I'm a passionate creative developer and digital designer with over 3 years of experience 
-                        crafting exceptional digital experiences. My journey spans web development, mobile 
+                        I'm a passionate creative developer and digital designer with over 3 years of experience
+                        crafting exceptional digital experiences. My journey spans web development, mobile
                         applications, and creative design, always focused on innovation and user-centric solutions.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4">
-                        <a href="index.html#contact" class="px-8 py-4 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-all duration-300 font-semibold hover:shadow-lg hover:transform hover:scale-105">
+                        <a href="contacts.html" class="px-8 py-4 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-all duration-300 font-semibold hover:shadow-lg hover:transform hover:scale-105">
                             Get In Touch
                         </a>
                         <a href="projects.html" class="px-8 py-4 border-2 border-sage-600 text-sage-600 rounded-lg hover:bg-sage-50 transition-all duration-300 font-semibold hover:shadow-lg">
@@ -173,7 +170,7 @@
                 </div>
                 <div class="scroll-animate">
                     <div class="relative">
-                        <img src="resources/profile.jpg" alt="Professional Portrait" 
+                        <img src="resources/profile.jpg" alt="Professional Portrait"
                              class="w-full max-w-md mx-auto rounded-2xl shadow-2xl">
                         <div class="absolute -bottom-6 -right-6 bg-sage-600 text-white p-4 rounded-xl">
                             <div class="text-2xl font-bold">3+</div>
@@ -193,7 +190,7 @@
                     My Journey
                 </h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    From curious beginner to experienced professional, here's how my passion for 
+                    From curious beginner to experienced professional, here's how my passion for
                     technology and design evolved into a fulfilling career.
                 </p>
             </div>
@@ -201,175 +198,34 @@
             <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-8 md:p-12 scroll-animate">
                 <div class="prose prose-lg max-w-none">
                     <p class="text-gray-700 leading-relaxed mb-6">
-                        My fascination with technology began during my computer science studies, where I discovered 
-                        the perfect intersection of logic and creativity. What started as curiosity about how websites 
-                        work quickly evolved into a deep passion for creating digital experiences that not only function 
+                        My fascination with technology began during my computer science studies, where I discovered
+                        the perfect intersection of logic and creativity. What started as curiosity about how websites
+                        work quickly evolved into a deep passion for creating digital experiences that not only function
                         flawlessly but also delight users.
                     </p>
                     <p class="text-gray-700 leading-relaxed mb-6">
-                        Over the past three years, I've had the privilege of working on diverse projects ranging from 
-                        enterprise web applications to innovative mobile solutions. Each project has been a learning 
+                        Over the past three years, I've had the privilege of working on diverse projects ranging from
+                        enterprise web applications to innovative mobile solutions. Each project has been a learning
                         opportunity, pushing me to explore new technologies and refine my approach to problem-solving.
                     </p>
                     <p class="text-gray-700 leading-relaxed mb-6">
-                        My philosophy centers around user-centric design and clean, maintainable code. I believe that 
-                        the best digital products emerge from the collaboration between thoughtful design and robust 
-                        technical implementation. This approach has helped me deliver solutions that not only meet 
+                        My philosophy centers around user-centric design and clean, maintainable code. I believe that
+                        the best digital products emerge from the collaboration between thoughtful design and robust
+                        technical implementation. This approach has helped me deliver solutions that not only meet
                         technical requirements but also exceed user expectations.
                     </p>
                     <p class="text-gray-700 leading-relaxed">
-                        When I'm not coding or designing, you'll find me exploring new technologies, contributing to 
-                        open-source projects, or sharing knowledge through technical writing and mentoring. I'm always 
+                        When I'm not coding or designing, you'll find me exploring new technologies, contributing to
+                        open-source projects, or sharing knowledge through technical writing and mentoring. I'm always
                         excited about the next challenge and the opportunity to create something meaningful.
                     </p>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Skills Deep Dive -->
-    <section class="py-20 bg-white">
-        <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-16 scroll-animate">
-                <h2 class="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-6">
-                    Technical Expertise
-                </h2>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    A comprehensive overview of my technical skills, tools, and technologies 
-                    I use to bring ideas to life.
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                <!-- Development Skills -->
-                <div class="scroll-animate">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Development Skills</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">JavaScript / TypeScript</span>
-                                <span class="text-gray-500">95%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="95%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">React / Next.js</span>
-                                <span class="text-gray-500">90%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="90%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Vue.js / Nuxt.js</span>
-                                <span class="text-gray-500">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Node.js / Express</span>
-                                <span class="text-gray-500">88%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="88%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Python / Django</span>
-                                <span class="text-gray-500">80%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="80%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">React Native</span>
-                                <span class="text-gray-500">75%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="75%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tools & Technologies -->
-                <div class="scroll-animate">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-8">Tools & Technologies</h3>
-                    <div class="space-y-6">
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Git / GitHub</span>
-                                <span class="text-gray-500">92%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="92%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Docker / DevOps</span>
-                                <span class="text-gray-500">78%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="78%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">AWS / Cloud Services</span>
-                                <span class="text-gray-500">82%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="82%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Figma / Design Tools</span>
-                                <span class="text-gray-500">85%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="85%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">MongoDB / PostgreSQL</span>
-                                <span class="text-gray-500">87%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="87%"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Jest / Testing</span>
-                                <span class="text-gray-500">80%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-3">
-                                <div class="skill-bar bg-sage-600 h-3 rounded-full" data-width="80%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Skills Visualization -->
-            <div class="mt-16 scroll-animate">
-                <div class="bg-gray-50 rounded-2xl p-8">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-8 text-center">Technology Stack Overview</h3>
-                    <div id="skills-radar-chart" class="h-96"></div>
-                </div>
+            <div class="text-center mt-8 scroll-animate">
+                <a href="skills.html" class="inline-flex items-center text-sage-600 hover:text-sage-800 font-semibold">
+                    See my full technical skills breakdown →
+                </a>
             </div>
         </div>
     </section>
@@ -403,7 +259,7 @@
                                 <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2023 - Present</span>
                             </div>
                             <p class="text-gray-600 mb-4">
-                                Leading development of enterprise web applications using React, Node.js, and cloud technologies. 
+                                Leading development of enterprise web applications using React, Node.js, and cloud technologies.
                                 Mentoring junior developers and architecting scalable solutions for high-traffic applications.
                             </p>
                             <div class="flex flex-wrap gap-2">
@@ -432,7 +288,7 @@
                                 <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2022 - 2023</span>
                             </div>
                             <p class="text-gray-600 mb-4">
-                                Developed custom web applications for diverse clients, from startups to established businesses. 
+                                Developed custom web applications for diverse clients, from startups to established businesses.
                                 Specialized in creating responsive, user-friendly interfaces and robust backend systems.
                             </p>
                             <div class="flex flex-wrap gap-2">
@@ -461,7 +317,7 @@
                                 <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2021 - 2022</span>
                             </div>
                             <p class="text-gray-600 mb-4">
-                                Started my professional journey building responsive websites and learning modern web technologies. 
+                                Started my professional journey building responsive websites and learning modern web technologies.
                                 Gained experience in client communication and project management while delivering quality solutions.
                             </p>
                             <div class="flex flex-wrap gap-2">
@@ -491,7 +347,7 @@
                                 <span class="text-sm text-gray-500 bg-gray-100 px-3 py-1 rounded-full">2017 - 2021</span>
                             </div>
                             <p class="text-gray-600 mb-4">
-                                Comprehensive education in computer science fundamentals, software engineering principles, 
+                                Comprehensive education in computer science fundamentals, software engineering principles,
                                 and web technologies. Graduated with honors and active participation in coding competitions.
                             </p>
                             <div class="flex flex-wrap gap-2">
@@ -515,7 +371,7 @@
                     Beyond Code
                 </h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    When I'm not building digital products, I enjoy exploring various interests 
+                    When I'm not building digital products, I enjoy exploring various interests
                     that keep me creative and inspired.
                 </p>
             </div>
@@ -529,7 +385,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Continuous Learning</h3>
                     <p class="text-gray-600">
-                        Always exploring new technologies, reading tech blogs, and taking online courses to stay current 
+                        Always exploring new technologies, reading tech blogs, and taking online courses to stay current
                         with industry trends and best practices.
                     </p>
                 </div>
@@ -542,7 +398,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Open Source</h3>
                     <p class="text-gray-600">
-                        Actively contributing to open source projects and maintaining my own repositories. 
+                        Actively contributing to open source projects and maintaining my own repositories.
                         Believing in giving back to the developer community.
                     </p>
                 </div>
@@ -555,7 +411,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Design & Creativity</h3>
                     <p class="text-gray-600">
-                        Exploring UI/UX design principles, creating digital art, and studying design systems 
+                        Exploring UI/UX design principles, creating digital art, and studying design systems
                         to enhance my creative problem-solving skills.
                     </p>
                 </div>
@@ -568,7 +424,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Mentoring</h3>
                     <p class="text-gray-600">
-                        Helping junior developers through code reviews, pair programming sessions, 
+                        Helping junior developers through code reviews, pair programming sessions,
                         and sharing knowledge through technical blog posts and tutorials.
                     </p>
                 </div>
@@ -581,7 +437,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Outdoor Activities</h3>
                     <p class="text-gray-600">
-                        Balancing screen time with hiking, photography, and nature exploration. 
+                        Balancing screen time with hiking, photography, and nature exploration.
                         Finding inspiration in the natural world for creative projects.
                     </p>
                 </div>
@@ -594,7 +450,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-gray-900 mb-4">Problem Solving</h3>
                     <p class="text-gray-600">
-                        Enjoying complex challenges, participating in coding competitions, and working on 
+                        Enjoying complex challenges, participating in coding competitions, and working on
                         side projects that push the boundaries of my technical abilities.
                     </p>
                 </div>
@@ -613,7 +469,7 @@
                     Ready to bring your ideas to life? I'm always interested in new challenges and collaborations.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                    <a href="index.html#contact" class="px-8 py-4 bg-white text-sage-600 rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold hover:shadow-lg hover:transform hover:scale-105">
+                    <a href="contacts.html" class="px-8 py-4 bg-white text-sage-600 rounded-lg hover:bg-gray-100 transition-all duration-300 font-semibold hover:shadow-lg hover:transform hover:scale-105">
                         Start a Project
                     </a>
                     <a href="projects.html" class="px-8 py-4 border-2 border-white text-white rounded-lg hover:bg-white hover:text-sage-600 transition-all duration-300 font-semibold hover:shadow-lg">
@@ -635,98 +491,13 @@
             </div>
             <div class="border-t border-gray-800 pt-8">
                 <p class="text-gray-400">
-                    © 2024 Professional Portfolio. All rights reserved.
+                    © 2026 Professional Portfolio. All rights reserved.
                 </p>
             </div>
         </div>
     </footer>
 
-    <!-- Main JavaScript -->
+    <!-- Main JavaScript (handles scroll animations, nothing else needed on this page) -->
     <script src="main.js"></script>
-    
-    <!-- About Page Specific JavaScript -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize skills radar chart
-            const chartDom = document.getElementById('skills-radar-chart');
-            if (chartDom) {
-                const myChart = echarts.init(chartDom);
-                const option = {
-                    title: {
-                        text: 'Technical Skills Assessment',
-                        left: 'center',
-                        textStyle: {
-                            fontSize: 16,
-                            fontWeight: 'normal'
-                        }
-                    },
-                    tooltip: {},
-                    radar: {
-                        indicator: [
-                            { name: 'Frontend', max: 100 },
-                            { name: 'Backend', max: 100 },
-                            { name: 'Mobile', max: 100 },
-                            { name: 'Database', max: 100 },
-                            { name: 'DevOps', max: 100 },
-                            { name: 'Design', max: 100 }
-                        ],
-                        shape: 'polygon',
-                        splitNumber: 4,
-                        axisName: {
-                            color: '#4f5449',
-                            fontSize: 12
-                        },
-                        splitLine: {
-                            lineStyle: {
-                                color: '#e8eae6'
-                            }
-                        },
-                        splitArea: {
-                            show: false
-                        }
-                    },
-                    series: [{
-                        name: 'Skills',
-                        type: 'radar',
-                        data: [
-                            {
-                                value: [90, 85, 75, 85, 80, 85],
-                                name: 'Current Level',
-                                itemStyle: {
-                                    color: '#7c8471'
-                                },
-                                areaStyle: {
-                                    color: 'rgba(124, 132, 113, 0.2)'
-                                }
-                            }
-                        ]
-                    }]
-                };
-                myChart.setOption(option);
-                
-                window.addEventListener('resize', function() {
-                    myChart.resize();
-                });
-            }
-
-            // Animate skill bars
-            const skillBars = document.querySelectorAll('.skill-bar');
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const bar = entry.target;
-                        const width = bar.dataset.width;
-                        setTimeout(() => {
-                            bar.style.width = width;
-                        }, 200);
-                    }
-                });
-            }, { threshold: 0.5 });
-
-            skillBars.forEach(bar => {
-                observer.observe(bar);
-            });
-        });
-    </script>
 </body>
 </html>
