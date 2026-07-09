@@ -77,14 +77,15 @@
     },
     {
       "featured": true,
-      "title": "crazy project",
-      "category": "web",
-      "description": "crazyyyyy",
-      "image": "resources/uploads/ferrari-7793589_1920.png",
-      "date": "2026-07-09",
+      "id": 6,
+      "title": "new project test",
+      "category": "design",
+      "description": "nice design",
       "technologies": [
-        "crazy technology"
-      ]
+        "flutter"
+      ],
+      "image": "resources/uploads/ferrari-7793589_1920.png",
+      "date": "2026-07-09"
     }
   ]
 }
