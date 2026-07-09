@@ -5,7 +5,14 @@
       "title": "Web Application Dashboard",
       "category": "web",
       "description": "Comprehensive project management dashboard with real-time analytics, user management, and data visualization. Built with modern web technologies and responsive design principles, with UML methods used to ensure the project is well organized and complete in terms of functionality and performance.",
-      "technologies": ["React", "Node.js", "Chart.js", "Python", "Apache", "PHP"],
+      "technologies": [
+        "React",
+        "Node.js",
+        "Chart.js",
+        "Python",
+        "Apache",
+        "PHP"
+      ],
       "image": "resources/app-pfe.jpg",
       "date": "2024-10-10",
       "featured": true
@@ -15,7 +22,12 @@
       "title": "Mobile Social App",
       "category": "mobile",
       "description": "Social networking application with clean UI design, real-time messaging, and intuitive user experience. Optimized for Android platforms.",
-      "technologies": ["Java", "Android Studio", "XML", "SQLite"],
+      "technologies": [
+        "Java",
+        "Android Studio",
+        "XML",
+        "SQLite"
+      ],
       "image": "resources/project-mobile.jpg",
       "date": "2024-07-20",
       "featured": true
@@ -25,7 +37,9 @@
       "title": "Data Analytics Platform",
       "category": "data",
       "description": "Linear programming tool using mathematical methods to calculate optimum solutions for a given problem. Supports a large number of input variables and uses the Big-M method to compute results, displaying the first matrix and then the final answer. Repository: https://github.com/massdjelf/plBig-M",
-      "technologies": ["Python"],
+      "technologies": [
+        "Python"
+      ],
       "image": "resources/project-data.jpg",
       "date": "2024-06-10",
       "featured": true
@@ -35,7 +49,13 @@
       "title": "E-Commerce Store",
       "category": "web",
       "description": "Full-featured online store with product management, shopping cart, payment integration, and inventory tracking. Modern design with custom JS-driven animations, built for the client's preferences with an excellent user experience.",
-      "technologies": ["Flask", "Python", "MySQL", "JS", "Bootstrap"],
+      "technologies": [
+        "Flask",
+        "Python",
+        "MySQL",
+        "JS",
+        "Bootstrap"
+      ],
       "image": "resources/project-design.jpg",
       "date": "2024-05-05",
       "featured": false
@@ -45,10 +65,26 @@
       "title": "Creative Portfolio",
       "category": "design",
       "description": "Artistic portfolio website showcasing creative work with beautiful galleries, smooth animations, and engaging visual storytelling.",
-      "technologies": ["HTML5", "CSS3", "JavaScript", "GSAP"],
+      "technologies": [
+        "HTML5",
+        "CSS3",
+        "JavaScript",
+        "GSAP"
+      ],
       "image": "resources/project-portfolio.jpg",
       "date": "2024-04-12",
       "featured": true
+    },
+    {
+      "featured": true,
+      "title": "crazy project",
+      "category": "web",
+      "description": "crazyyyyy",
+      "image": "resources/uploads/ferrari-7793589_1920.png",
+      "date": "2026-07-09",
+      "technologies": [
+        "crazy technology"
+      ]
     }
   ]
 }
