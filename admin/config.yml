@@ -1,11 +1,7 @@
 backend:
-  name: github
-  repo: massdjelf/portfolio
+  name: git-gateway
   branch: main
-  base_url: https://portfolio-cms-auth.massyl.workers.dev
-  auth_endpoint: auth
 
-# Project site (massdjelf.github.io/portfolio), not a user site
 site_url: https://massdjelf.github.io/portfolio
 display_url: https://massdjelf.github.io/portfolio
 
@@ -16,7 +12,6 @@ collections:
   - name: "certifications"
     label: "Certifications"
     label_singular: "Certification"
-    description: "Certifications shown on the homepage and skills page."
     files:
       - name: "certifications"
         label: "Certifications List"
@@ -33,12 +28,11 @@ collections:
               - { name: "title", label: "Title", widget: "string" }
               - { name: "issuer", label: "Issuer", widget: "string" }
               - { name: "year", label: "Year", widget: "string" }
-              - { name: "image", label: "Image", widget: "image", required: false, media_library: { config: { multiple: false } } }
+              - { name: "image", label: "Image", widget: "image", required: false }
 
   - name: "projects"
     label: "Projects"
     label_singular: "Project"
-    description: "Portfolio project entries."
     files:
       - name: "projects"
         label: "Projects List"
