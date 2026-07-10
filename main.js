@@ -61,15 +61,28 @@ class PortfolioManager {
             return;
         }
 
-        certGrid.innerHTML = this.certifications.map((cert) => `
-            <div class="certification-badge bg-white rounded-lg p-6 text-center relative border border-gray-100">
-                <div class="w-16 h-16 bg-sage-100 rounded-full flex items-center justify-center mx-auto mb-4 overflow-hidden">
-                    ${cert.image ? `<img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover">` : `<svg class="w-8 h-8 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>`}
+        const certIconSvg = `<svg class="w-10 h-10 text-sage-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>`;
+
+        certGrid.innerHTML = this.certifications.map((cert) => {
+            const cardInner = `
+                <div class="w-full h-40 bg-sage-50 overflow-hidden flex items-center justify-center">
+                    ${cert.image
+                        ? `<img src="${cert.image}" alt="${cert.title}" class="w-full h-full object-cover" onerror="this.style.display='none'; this.parentElement.innerHTML='${certIconSvg.replace(/'/g, "\\'")}';">`
+                        : certIconSvg}
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 mb-2">${cert.title}</h3>
-                <p class="text-gray-600 text-sm mb-3">${cert.issuer}</p>
-                <span class="text-sage-600 font-medium text-sm">${cert.year}</span>
-            </div>`).join('');
+                <div class="p-6 text-center">
+                    <h3 class="text-lg font-bold text-gray-900 mb-2">${cert.title}</h3>
+                    <p class="text-gray-600 text-sm mb-3">${cert.issuer}</p>
+                    <div class="flex items-center justify-center gap-2">
+                        <span class="text-sage-600 font-medium text-sm">${cert.year}</span>
+                        ${cert.credentialUrl ? `<span class="text-sage-400">•</span><span class="text-sage-600 text-sm font-medium">View credential →</span>` : ''}
+                    </div>
+                </div>`;
+
+            return cert.credentialUrl
+                ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer" class="certification-badge block bg-white rounded-lg overflow-hidden relative border border-gray-100 hover:border-sage-300 hover:shadow-lg transition-all">${cardInner}</a>`
+                : `<div class="certification-badge bg-white rounded-lg overflow-hidden relative border border-gray-100">${cardInner}</div>`;
+        }).join('');
     }
 
     setupEventListeners() {
@@ -417,7 +430,7 @@ class PortfolioManager {
 
                 ctx.beginPath();
                 ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(124, 132, 113, ${particle.opacity})`;
+                ctx.fillStyle = `rgba(168, 184, 150, ${particle.opacity})`;
                 ctx.fill();
             });
             requestAnimationFrame(animate);

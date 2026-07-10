@@ -24,10 +24,22 @@
                             700: '#4f5449',
                             800: '#41443c',
                             900: '#363931'
+                        },
+                        ink: {
+                            50: '#f4f4f6',
+                            100: '#e4e4e9',
+                            400: '#5a5d6e',
+                            600: '#33364a',
+                            800: '#1c1e2b',
+                            900: '#12141c'
+                        },
+                        mint: {
+                            300: '#c3d1b6',
+                            400: '#a8b896'
                         }
                     },
                     fontFamily: {
-                        'display': ['Georgia', 'serif'],
+                        'display': ['Fraunces', 'Georgia', 'serif'],
                         'body': ['Inter', 'system-ui', 'sans-serif'],
                         'mono': ['JetBrains Mono', 'monospace']
                     }
@@ -44,12 +56,11 @@
 
     <!-- Custom Styles -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 
         .hero-bg {
-            background: linear-gradient(135deg, rgba(124, 132, 113, 0.1) 0%, rgba(255, 255, 255, 0.9) 100%),
-                        url('resources/hero-bg.jpg') center/cover no-repeat;
-            min-height: 100vh;
+            min-height: 92vh;
             position: relative;
         }
 
@@ -132,61 +143,143 @@
 </head>
 <body class="font-body text-gray-800 bg-white">
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 z-40">
+    <nav class="fixed top-0 left-0 right-0 bg-ink-900 border-b border-white/10 z-40">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="font-display font-bold text-xl text-gray-900">
-                    Portfolio
+                <div class="font-mono font-medium text-lg text-white tracking-tight">
+                    massyl<span class="text-mint-400">.me</span>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="skills.html#certifications" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Certifications</a>
-                    <a href="index.html" class="text-sage-600 font-medium">Home</a>
-                    <a href="projects.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Projects</a>
-                    <a href="skills.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Skills</a>
-                    <a href="contacts.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
+                <div class="hidden md:flex items-center space-x-8 font-mono text-sm">
+                    <a href="index.html" class="text-mint-400">home</a>
+                    <a href="projects.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">projects</a>
+                    <a href="skills.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">skills</a>
+                    <a href="skills.html#certifications" class="text-ink-100/70 hover:text-mint-400 transition-colors">certifications</a>
+                    <a href="contacts.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">contact</a>
                 </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-sage-600" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                    <button id="mobile-menu-btn" class="text-white hover:text-mint-400" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
             </div>
-            <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-gray-100 pt-4 space-y-3">
-                <a href="skills.html#certifications" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Certifications</a>
-                <a href="index.html" class="block text-sage-600 font-medium">Home</a>
-                <a href="projects.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Projects</a>
-                <a href="skills.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Skills</a>
-                <a href="contacts.html" class="block text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-white/10 pt-4 space-y-3 font-mono text-sm">
+                <a href="index.html" class="block text-mint-400">home</a>
+                <a href="projects.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">projects</a>
+                <a href="skills.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">skills</a>
+                <a href="skills.html#certifications" class="block text-ink-100/70 hover:text-mint-400 transition-colors">certifications</a>
+                <a href="contacts.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">contact</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="hero-bg flex items-center justify-center relative">
+    <section id="home" class="hero-bg flex items-center justify-center relative bg-ink-900">
         <canvas id="particles-canvas"></canvas>
-        <div class="hero-content max-w-6xl mx-auto px-6 text-center">
-            <div class="max-w-4xl mx-auto">
-                <h1 class="hero-title text-5xl md:text-7xl font-display font-bold text-gray-900 mb-6 leading-tight">
-                    Creative <span class="text-gradient">Developer</span> &<br>
-                    Digital Designer
-                </h1>
-                <p class="hero-subtitle text-xl md:text-2xl text-gray-600 mb-8 leading-relaxed max-w-2xl mx-auto">
-                    Crafting exceptional digital experiences through innovative web development,
-                    mobile applications, and creative design solutions.
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                    <a href="#projects" class="px-8 py-4 bg-sage-600 text-white rounded-lg hover:bg-sage-700 transition-all duration-300 font-semibold hover:shadow-lg hover:transform hover:scale-105">
-                        View My Work
-                    </a>
-                    <a href="contacts.html" class="px-8 py-4 border-2 border-sage-600 text-sage-600 rounded-lg hover:bg-sage-50 transition-all duration-300 font-semibold hover:shadow-lg">
-                        Get In Touch
-                    </a>
+        <div class="hero-content max-w-6xl mx-auto px-6 py-28">
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center mb-14">
+                <div class="lg:col-span-3 order-2 lg:order-1">
+                    <p class="hero-subtitle font-mono text-sm text-mint-400 mb-4 tracking-wide">full-stack developer · mobile · data</p>
+                    <h1 class="hero-title text-5xl md:text-6xl font-display font-medium text-white mb-6 leading-[1.1]">
+                        I'm Massyl<br>
+                        <span class="text-mint-400">Bouzidi</span>
+                    </h1>
+                    <p class="hero-subtitle text-lg text-ink-100/70 mb-10 leading-relaxed max-w-xl">
+                        I build products end-to-end and love turning early ideas into real brands —
+                        from the first line of code to a name people remember. Always sketching new
+                        startup concepts, always open to the next bold thing to build.
+                    </p>
+                    <div class="hero-subtitle flex flex-col sm:flex-row gap-4">
+                        <a href="resources/cv.pdf" download class="px-7 py-3.5 bg-mint-400 text-ink-900 rounded font-semibold hover:bg-mint-300 transition-all text-center flex items-center justify-center gap-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M7 10l5 5 5-5M12 15V3"></path></svg>
+                            Download CV
+                        </a>
+                        <a href="contacts.html" class="px-7 py-3.5 border border-white/20 text-white rounded font-semibold hover:border-mint-400 hover:text-mint-400 transition-all text-center">
+                            Get in touch
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 hero-subtitle order-1 lg:order-2">
+                    <div class="relative w-64 h-64 mx-auto">
+                        <div class="absolute inset-0 rounded-full overflow-hidden border-2 border-white/10 bg-ink-800">
+                            <img src="resources/profile-hero.jpg" alt="Massyl Bouzidi" class="w-full h-full object-cover"
+                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="w-full h-full items-center justify-center font-display text-5xl text-mint-400" style="display:none;">MB</div>
+                        </div>
+                        <div class="absolute -top-2 -left-6 bg-ink-800 border border-white/10 rounded-full px-4 py-2 font-mono text-xs text-mint-400 shadow-lg">
+                            determined
+                        </div>
+                        <div class="absolute top-6 -right-8 bg-ink-800 border border-white/10 rounded-full px-4 py-2 font-mono text-xs text-mint-400 shadow-lg">
+                            persistent
+                        </div>
+                        <div class="absolute bottom-4 -left-10 bg-ink-800 border border-white/10 rounded-full px-4 py-2 font-mono text-xs text-mint-400 shadow-lg">
+                            brave
+                        </div>
+                        <div class="absolute -bottom-3 right-0 bg-ink-800 border border-white/10 rounded-full px-4 py-2 font-mono text-xs text-mint-400 shadow-lg">
+                            creative
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-subtitle max-w-2xl mx-auto lg:mx-0">
+                <div class="bg-ink-800 border border-white/10 rounded-lg p-6 font-mono text-sm">
+                    <div class="flex items-center gap-2 mb-4 pb-4 border-b border-white/10">
+                        <span class="w-2.5 h-2.5 rounded-full bg-mint-400"></span>
+                        <span class="text-ink-100/50">status.log</span>
+                    </div>
+                    <div class="space-y-2 text-ink-100/80">
+                        <p><span class="text-mint-400">$</span> whoami</p>
+                        <p class="text-ink-100/60 pl-4">Massyl Bouzidi — Algiers, DZ</p>
+                        <p><span class="text-mint-400">$</span> stack --current</p>
+                        <p class="text-ink-100/60 pl-4">React · Node.js · Python · Flutter</p>
+                        <p><span class="text-mint-400">$</span> status</p>
+                        <p class="text-ink-100/60 pl-4">open to business · building ideas into brands</p>
+                        <p class="flex items-center gap-2"><span class="text-mint-400">$</span> <span class="w-2 h-4 bg-mint-400/80 inline-block animate-pulse"></span></p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Behind the Scenes -->
+    <section class="py-20 bg-white overflow-hidden">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="scroll-animate order-2 lg:order-1">
+                    <p class="font-mono text-sm text-sage-600 mb-3 tracking-wide">behind the scenes</p>
+                    <h2 class="text-3xl md:text-4xl font-display font-medium text-gray-900 mb-6">
+                        Building is where I'm happiest
+                    </h2>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        Most of what you see here started as a rough idea scribbled somewhere —
+                        a name, a sketch, a "what if." I like the whole arc: naming something,
+                        designing its first screen, then actually shipping it.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed">
+                        If you're building a startup, a brand, or just have a wild idea you want
+                        to see become real, I'd love to hear about it.
+                    </p>
+                </div>
+                <div class="scroll-animate order-1 lg:order-2">
+                    <div class="relative max-w-sm mx-auto">
+                        <div class="bg-white border border-gray-200 rounded-lg shadow-xl p-3 pb-6 transform rotate-2 hover:rotate-0 transition-transform duration-300">
+                            <div class="w-full aspect-[4/5] bg-sage-50 rounded overflow-hidden">
+                                <img src="resources/coding-session.jpg" alt="Massyl coding" class="w-full h-full object-cover"
+                                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <div class="w-full h-full items-center justify-center" style="display:none;">
+                                    <svg class="w-16 h-16 text-sage-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 9l-4 3 4 3m8-6l4 3-4 3M13 5l-2 14"></path></svg>
+                                </div>
+                            </div>
+                            <p class="font-mono text-xs text-gray-400 text-center mt-4">late night, deep in the code</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Certifications Section -->
     <section id="certifications" class="py-20 bg-white">

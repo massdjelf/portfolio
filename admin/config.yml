@@ -29,6 +29,7 @@ collections:
               - { name: "issuer", label: "Issuer", widget: "string" }
               - { name: "year", label: "Year", widget: "string" }
               - { name: "image", label: "Image", widget: "image", required: false }
+              - { name: "credentialUrl", label: "Credential Link (optional)", widget: "string", required: false, hint: "e.g. your Kaggle/Cursa certificate URL — makes the whole card clickable." }
 
   - name: "projects"
     label: "Projects"
