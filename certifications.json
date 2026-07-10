@@ -9,17 +9,19 @@
     },
     {
       "id": 1777678339328,
-      "title": "Intro to AI Ethics",
+      "title": "Intro into AI Ethics",
       "issuer": "Kaggle",
       "year": "2026",
-      "image": "resources/kaggle2.png"
+      "image": "resources/kaggle2.png",
+      "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/intro-to-ai-ethics"
     },
     {
       "id": 1777678206053,
       "title": "Geospatial Analysis",
       "issuer": "Kaggle",
       "year": "2026",
-      "image": "resources/kaggle1.png"
+      "image": "resources/kaggle1.png",
+      "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/geospatial-analysis"
     },
     {
       "id": 1777678162523,
@@ -29,13 +31,6 @@
       "image": "resources/cursa1.jpg"
     },
     {
-      "id": 1,
-      "title": "Responsive Web Design",
-      "issuer": "freeCodeCamp",
-      "year": "2024",
-      "image": ""
-    },
-    {
       "id": 2,
       "title": "Python for Data Analysis",
       "issuer": "Coursera",
@@ -43,11 +38,10 @@
       "image": ""
     },
     {
-      "id": 3,
-      "title": "Android App Development",
-      "issuer": "Google Career Certificate",
-      "year": "2025",
-      "image": ""
+      "title": "data cleaning.",
+      "issuer": "kaggle",
+      "year": "2026",
+      "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/data-cleaning"
     }
   ]
 }
