@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects - Professional Portfolio</title>
+    <title>Projects — massyl.me</title>
     <meta name="description" content="Comprehensive project gallery showcasing web development, mobile apps, design work, and data science projects.">
 
     <!-- Tailwind CSS -->
@@ -24,10 +24,22 @@
                             700: '#4f5449',
                             800: '#41443c',
                             900: '#363931'
+                        },
+                        ink: {
+                            50: '#f4f4f6',
+                            100: '#e4e4e9',
+                            400: '#5a5d6e',
+                            600: '#33364a',
+                            800: '#1c1e2b',
+                            900: '#12141c'
+                        },
+                        mint: {
+                            300: '#c3d1b6',
+                            400: '#a8b896'
                         }
                     },
                     fontFamily: {
-                        'display': ['Georgia', 'serif'],
+                        'display': ['Fraunces', 'Georgia', 'serif'],
                         'body': ['Inter', 'system-ui', 'sans-serif'],
                         'mono': ['JetBrains Mono', 'monospace']
                     }
@@ -44,7 +56,7 @@
 
     <!-- Custom Styles -->
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap');
 
         .line-clamp-3 {
             display: -webkit-box;
@@ -88,41 +100,52 @@
     </style>
 </head>
 <body class="font-body text-gray-800 bg-gray-50">
+
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-sm border-b border-gray-100 z-40">
+    <nav class="fixed top-0 left-0 right-0 bg-ink-900 border-b border-white/10 z-40">
         <div class="max-w-6xl mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <div class="font-display font-bold text-xl text-gray-900">
-                    <a href="index.html">Portfolio</a>
+                <div class="font-mono font-medium text-lg text-white tracking-tight">
+                    <a href="index.html">massyl<span class="text-mint-400">.me</span></a>
                 </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="skills.html#certifications" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Certifications</a>
-                    <a href="index.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Home</a>
-                    <a href="projects.html" class="text-sage-600 font-medium">Projects</a>
-                    <a href="skills.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Skills</a>
-                    <a href="contacts.html" class="text-gray-700 hover:text-sage-600 transition-colors font-medium">Contact</a>
+                <div class="hidden md:flex items-center space-x-8 font-mono text-sm">
+                    <a href="index.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">home</a>
+                    <a href="projects.html" class="text-mint-400">projects</a>
+                    <a href="skills.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">skills</a>
+                    <a href="path.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">my-path</a>
+                    <a href="skills.html#certifications" class="text-ink-100/70 hover:text-mint-400 transition-colors">certifications</a>
+                    <a href="contacts.html" class="text-ink-100/70 hover:text-mint-400 transition-colors">contact</a>
                 </div>
                 <div class="md:hidden">
-                    <button class="text-gray-700 hover:text-sage-600">
+                    <button id="mobile-menu-btn" class="text-white hover:text-mint-400" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
                         </svg>
                     </button>
                 </div>
             </div>
+            <div id="mobile-menu" class="hidden md:hidden mt-4 border-t border-white/10 pt-4 space-y-3 font-mono text-sm">
+                <a href="index.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">home</a>
+                <a href="projects.html" class="block text-mint-400">projects</a>
+                <a href="skills.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">skills</a>
+                <a href="skills.html#certifications" class="block text-ink-100/70 hover:text-mint-400 transition-colors">certifications</a>
+                <a href="path.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">my path</a>
+                <a href="contacts.html" class="block text-ink-100/70 hover:text-mint-400 transition-colors">contact</a>
+            </div>
         </div>
     </nav>
 
+
     <!-- Header Section -->
-    <section class="pt-24 pb-12 bg-white">
+    <section class="pt-32 pb-16 bg-ink-900">
         <div class="max-w-6xl mx-auto px-6">
-            <div class="text-center mb-12">
-                <h1 class="text-4xl md:text-6xl font-display font-bold text-gray-900 mb-6">
+            <div class="text-center">
+                <p class="font-mono text-sm text-mint-400 mb-4 tracking-wide">things I've built</p>
+                <h1 class="text-4xl md:text-6xl font-display font-medium text-white mb-6">
                     Project Gallery
                 </h1>
-                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Explore my comprehensive collection of projects spanning web development,
-                    mobile applications, data science, and creative design work.
+                <p class="text-lg text-white/60 max-w-2xl mx-auto">
+                    Web, mobile, data science, and design — a collection of work built from scratch.
                 </p>
             </div>
         </div>
