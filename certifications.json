@@ -42,6 +42,12 @@
       "issuer": "kaggle",
       "year": "2026",
       "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/data-cleaning"
+    },
+    {
+      "title": "IT Automation",
+      "issuer": "Cursa",
+      "year": "2026",
+      "image": "resources/uploads/certificatit.jpg"
     }
   ]
 }
