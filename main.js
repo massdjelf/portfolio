@@ -32,7 +32,9 @@ class PortfolioManager {
             const response = await fetch('projects.json', { cache: 'no-store' });
             if (!response.ok) throw new Error('Failed to load projects.json');
             const data = await response.json();
-            this.projects = Array.isArray(data.items) ? data.items : [];
+            this.projects = Array.isArray(data.items)
+                ? data.items.map((p, i) => ({ ...p, _idx: i }))
+                : [];
         } catch (error) {
             console.error(error);
             this.projects = [];
@@ -176,7 +178,7 @@ class PortfolioManager {
         if (limit) projectsToRender = projectsToRender.slice(0, limit);
 
         container.innerHTML = projectsToRender.map((project, index) => {
-            const pid = (project.id !== undefined && project.id !== null) ? project.id : `idx-${index}`;
+            const pid = `idx-${project._idx}`;
             return `
             <div class="project-card group transform transition-all duration-300 hover:shadow-2xl"
                  data-project-id="${pid}">
@@ -270,9 +272,8 @@ class PortfolioManager {
     // ─── Modals ────────────────────────────────────────────────────────────────
 
     showProjectModal(projectId) {
-        const project = typeof projectId === 'string' && projectId.startsWith('idx-')
-            ? this.projects[parseInt(projectId.replace('idx-', ''), 10)]
-            : this.projects.find(p => p.id === projectId);
+        const idx = parseInt(String(projectId).replace('idx-', ''), 10);
+        const project = this.projects.find(p => p._idx === idx);
         if (!project) return;
 
         const modal = document.createElement('div');
@@ -347,9 +348,8 @@ class PortfolioManager {
     }
 
     showImageLightbox(projectId) {
-        const project = typeof projectId === 'string' && projectId.startsWith('idx-')
-            ? this.projects[parseInt(projectId.replace('idx-', ''), 10)]
-            : this.projects.find(p => p.id === projectId);
+        const idx = parseInt(String(projectId).replace('idx-', ''), 10);
+        const project = this.projects.find(p => p._idx === idx);
         if (!project) return;
 
         const modal = document.createElement('div');
@@ -414,18 +414,14 @@ class PortfolioManager {
             const viewBtn = e.target.closest('.view-details-btn');
             if (viewBtn) {
                 e.stopPropagation();
-                const raw = viewBtn.dataset.projectId;
-                const id = raw.startsWith('idx-') ? raw : parseInt(raw, 10);
-                this.showProjectModal(id);
+                this.showProjectModal(viewBtn.dataset.projectId);
                 return;
             }
 
             // 2. Image area → open lightbox
             const imgTrigger = e.target.closest('.project-image-trigger');
             if (imgTrigger) {
-                const raw = imgTrigger.dataset.projectId;
-                const id = raw.startsWith('idx-') ? raw : parseInt(raw, 10);
-                this.showImageLightbox(id);
+                this.showImageLightbox(imgTrigger.dataset.projectId);
                 return;
             }
 
