@@ -60,6 +60,50 @@
       "image": "resources/project-design.jpg",
       "date": "2024-05-05",
       "featured": false
+    },
+    {
+      "featured": true,
+      "image": "resources/uploads/screen032.jpg",
+      "title": "branch and bound",
+      "category": "data",
+      "description": "nodes and calculations for better understanding",
+      "technologies": [
+        "python-matplotlib."
+      ],
+      "date": "2026-05-10"
+    },
+    {
+      "featured": true,
+      "image": "resources/uploads/screen02.jpg",
+      "title": "branch and bound",
+      "category": "data",
+      "description": "tree like visualization of the steps we need to solve branch and bound for a certain problem",
+      "date": "2026-05-10",
+      "technologies": [
+        "python-matplotlib."
+      ]
+    },
+    {
+      "featured": true,
+      "image": "resources/uploads/screen023.jpg",
+      "title": "branch and bound",
+      "category": "data",
+      "description": "graph visualization of the optimal solution.",
+      "technologies": [
+        "python-matplotlib."
+      ],
+      "date": "2026-05-10"
+    },
+    {
+      "featured": true,
+      "image": "resources/uploads/image.png",
+      "title": "simplex method",
+      "category": "data",
+      "description": "3d graph visualization of all the constraints and the optimal solution with a full report download button.",
+      "technologies": [
+        "python-matplotlib."
+      ],
+      "date": "2026-04-10"
     }
   ]
 }
