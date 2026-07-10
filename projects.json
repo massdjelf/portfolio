@@ -2,16 +2,16 @@
   "items": [
     {
       "id": 1,
-      "title": "Web Application Dashboard",
+      "title": "complete system for appointment management ",
       "category": "web",
-      "description": "Comprehensive project management dashboard with real-time analytics, user management, and data visualization. Built with modern web technologies and responsive design principles, with UML methods used to ensure the project is well organized and complete in terms of functionality and performance.",
+      "description": "currently in use comprehensive appointment management system with real-time analytics, user management, and data visualization. Built with modern web technologies and responsive design principles, with UML methods used to ensure the project is well organized and complete in terms of functionality and performance,and well adapted to both clients and users needs",
       "technologies": [
-        "React",
-        "Node.js",
-        "Chart.js",
-        "Python",
-        "Apache",
-        "PHP"
+        "python",
+        "java script",
+        "smtp to mail users before their appointment as a reminding system",
+        "nginx",
+        "django",
+        "postgresql"
       ],
       "image": "resources/app-pfe.jpg",
       "date": "2024-10-10",
@@ -19,16 +19,17 @@
     },
     {
       "id": 2,
-      "title": "Mobile Social App",
+      "title": "Mobile app for female only private driver services ",
       "category": "mobile",
-      "description": "Social networking application with clean UI design, real-time messaging, and intuitive user experience. Optimized for Android platforms.",
+      "description": "Mobile app for female only private driver services with extra security and many built in sponsored services and offers (free waiting for sponsored hair salons,grocery stores ... ) to attract our users.",
       "technologies": [
         "Java",
         "Android Studio",
         "XML",
-        "SQLite"
+        "SQLite",
+        "flutter"
       ],
-      "image": "resources/project-mobile.jpg",
+      "image": "resources/uploads/shedriveapp.jpg",
       "date": "2024-07-20",
       "featured": true
     },
@@ -59,33 +60,6 @@
       "image": "resources/project-design.jpg",
       "date": "2024-05-05",
       "featured": false
-    },
-    {
-      "id": 5,
-      "title": "Creative Portfolio",
-      "category": "design",
-      "description": "Artistic portfolio website showcasing creative work with beautiful galleries, smooth animations, and engaging visual storytelling.",
-      "technologies": [
-        "HTML5",
-        "CSS3",
-        "JavaScript",
-        "GSAP"
-      ],
-      "image": "resources/project-portfolio.jpg",
-      "date": "2024-04-12",
-      "featured": true
-    },
-    {
-      "featured": true,
-      "id": 6,
-      "title": "new project test",
-      "category": "design",
-      "description": "nice design",
-      "technologies": [
-        "flutter"
-      ],
-      "image": "resources/uploads/ferrari-7793589_1920.png",
-      "date": "2026-07-09"
     }
   ]
 }
