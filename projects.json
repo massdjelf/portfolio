@@ -13,7 +13,7 @@
         "django",
         "postgresql"
       ],
-      "image": "resources/app-pfe.jpg",
+      "image": "resources/app-pfe.webp",
       "date": "2024-10-10",
       "featured": true
     },
@@ -29,7 +29,7 @@
         "SQLite",
         "flutter"
       ],
-      "image": "resources/uploads/shedriveapp.jpg",
+      "image": "resources/uploads/shedriveapp.webp",
       "date": "2024-07-20",
       "featured": true
     },
@@ -41,7 +41,7 @@
       "technologies": [
         "Python"
       ],
-      "image": "resources/project-data.jpg",
+      "image": "resources/project-data.webp",
       "date": "2024-06-10",
       "featured": true
     },
@@ -57,13 +57,13 @@
         "JS",
         "Bootstrap"
       ],
-      "image": "resources/project-design.jpg",
+      "image": "resources/project-design.webp",
       "date": "2024-05-05",
       "featured": false
     },
     {
       "featured": true,
-      "image": "resources/uploads/screen032.jpg",
+      "image": "resources/uploads/screen032.webp",
       "title": "branch and bound",
       "category": "data",
       "description": "nodes and calculations for better understanding",
@@ -74,7 +74,7 @@
     },
     {
       "featured": true,
-      "image": "resources/uploads/screen02.jpg",
+      "image": "resources/uploads/screen02.webp",
       "title": "branch and bound",
       "category": "data",
       "description": "tree like visualization of the steps we need to solve branch and bound for a certain problem",
@@ -85,7 +85,7 @@
     },
     {
       "featured": true,
-      "image": "resources/uploads/screen023.jpg",
+      "image": "resources/uploads/screen023.webp",
       "title": "branch and bound",
       "category": "data",
       "description": "graph visualization of the optimal solution.",
@@ -96,7 +96,7 @@
     },
     {
       "featured": true,
-      "image": "resources/uploads/image.png",
+      "image": "resources/uploads/image.webp",
       "title": "simplex method",
       "category": "data",
       "description": "3d graph visualization of all the constraints and the optimal solution with a full report download button.",
@@ -113,7 +113,7 @@
       "technologies": [
         "tailwindcss"
       ],
-      "image": "resources/uploads/cool.png",
+      "image": "resources/uploads/cool.webp",
       "date": "2026-06-10"
     }
   ]

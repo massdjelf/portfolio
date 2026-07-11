@@ -5,14 +5,14 @@
       "title": "Business Intelligence",
       "issuer": "Cursa",
       "year": "2026",
-      "image": "resources/cursa2.jpg"
+      "image": "resources/cursa2.webp"
     },
     {
       "id": 1777678339328,
       "title": "Intro into AI Ethics",
       "issuer": "Kaggle",
       "year": "2026",
-      "image": "resources/kaggle2.png",
+      "image": "resources/kaggle2.webp",
       "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/intro-to-ai-ethics"
     },
     {
@@ -20,7 +20,7 @@
       "title": "Geospatial Analysis",
       "issuer": "Kaggle",
       "year": "2026",
-      "image": "resources/kaggle1.png",
+      "image": "resources/kaggle1.webp",
       "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/geospatial-analysis"
     },
     {
@@ -28,7 +28,7 @@
       "title": "Fullstack App using React & JWT",
       "issuer": "Cursa",
       "year": "2026",
-      "image": "resources/cursa1.jpg"
+      "image": "resources/cursa1.webp"
     },
     {
       "id": 2,
@@ -42,13 +42,13 @@
       "issuer": "kaggle",
       "year": "2026",
       "credentialUrl": "https://www.kaggle.com/learn/certification/massyl1/data-cleaning",
-      "image": "resources/uploads/untitled.png"
+      "image": "resources/uploads/untitled.webp"
     },
     {
       "title": "IT Automation",
       "issuer": "Cursa",
       "year": "2026",
-      "image": "resources/uploads/certificatit.jpg"
+      "image": "resources/uploads/certificatit.webp"
     }
   ]
 }

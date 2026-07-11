@@ -12,7 +12,7 @@ const writeDb = (data) => fs.writeFileSync(dbPath, `${JSON.stringify(data, null,
 
 if (!cmd || !['add','delete','list'].includes(cmd)) {
   console.log('Usage: node scripts/manage-certifications.js <list|add|delete> [options]');
-  console.log('add options: --title "..." --issuer "..." --year "2026" --image "resources/certifications/file.png"');
+  console.log('add options: --title "..." --issuer "..." --year "2026" --image "resources/certifications/file.webp"');
   console.log('delete options: --id 12345');
   process.exit(1);
 }
