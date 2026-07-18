@@ -15,7 +15,7 @@
       ],
       "image": "resources/app-pfe.webp",
       "date": "2024-10-10",
-      "featured": true
+      "featured": false
     },
     {
       "id": 2,
@@ -43,7 +43,7 @@
       ],
       "image": "resources/project-data.webp",
       "date": "2024-06-10",
-      "featured": true
+      "featured": false
     },
     {
       "id": 4,
@@ -62,7 +62,7 @@
       "featured": false
     },
     {
-      "featured": true,
+      "featured": false,
       "image": "resources/uploads/screen032.webp",
       "title": "branch and bound",
       "category": "data",
@@ -73,7 +73,7 @@
       "date": "2026-05-10"
     },
     {
-      "featured": true,
+      "featured": false,
       "image": "resources/uploads/screen02.webp",
       "title": "branch and bound",
       "category": "data",
@@ -84,7 +84,7 @@
       ]
     },
     {
-      "featured": true,
+      "featured": false,
       "image": "resources/uploads/screen023.webp",
       "title": "branch and bound",
       "category": "data",

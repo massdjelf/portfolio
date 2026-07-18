@@ -8,53 +8,18 @@
     <link rel="icon" type="image/webp" href="resources/favicon.webp">
     <meta property="og:image" content="https://massyl.uk/resources/profile-hero.webp">
     <meta property="og:url" content="https://massyl.uk">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: {
-                            50: '#f6f7f5',
-                            100: '#e8eae6',
-                            200: '#d1d5cc',
-                            300: '#b4bba8',
-                            400: '#949e85',
-                            500: '#7c8471',
-                            600: '#626858',
-                            700: '#4f5449',
-                            800: '#41443c',
-                            900: '#363931'
-                        },
-                        ink: {
-                            50: '#f4f4f6',
-                            100: '#e4e4e9',
-                            400: '#5a5d6e',
-                            600: '#33364a',
-                            800: '#1c1e2b',
-                            900: '#12141c'
-                        },
-                        mint: {
-                            300: '#c3d1b6',
-                            400: '#a8b896'
-                        }
-                    },
-                    fontFamily: {
-                        'display': ['Fraunces', 'Georgia', 'serif'],
-                        'body': ['Inter', 'system-ui', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-
+<!-- Tailwind CSS (compiled) -->
+<link rel="stylesheet" href="resources/tailwind.css">
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
     <!-- Custom Styles -->
     <style>
+
+	html, body {
+	    overflow-x: hidden;
+	    max-width: 100%;
+	}
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap');
 		.timeline-card {
 	 	    background: white;
@@ -74,6 +39,18 @@
             transform: translateY(30px);
             transition: all 0.6s ease;
         }
+
+	.timeline-card {
+	    opacity: 0;
+	    transform: translateY(50px);
+	    transition: all .6s ease;
+	}
+
+	.timeline-card.visible {
+    		opacity: 1;
+    		transform: translateY(0);
+	}
+
         .scroll-animate.animate-fade-in-up {
             opacity: 1;
             transform: translateY(0);
@@ -93,27 +70,39 @@
         .timeline-node {
             box-shadow: 0 0 0 4px #f6f7f5, 0 0 0 6px #7c8471;
         }
-        .track-arrow {
-            position: relative;
-        }
-        .track-arrow::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 0;
-            height: 0;
-            transform: translateY(-50%);
-            border-top: 7px solid transparent;
-            border-bottom: 7px solid transparent;
-        }
-        .track-arrow.to-center::after {
-            right: -14px;
-            border-left: 10px solid #b4bba8;
-        }
-        .track-arrow.from-center::after {
-            left: -14px;
-            border-right: 10px solid #b4bba8;
-        }
+/* Mobile path timeline: cards slide in from left/right as you scroll */
+
+@media (max-width: 767px) {
+    .grid.md\:grid-cols-2 {
+        display: flex;
+        flex-direction: column;
+        gap: 2.5rem;
+    }
+
+    .path-work,
+    .path-academic {
+        opacity: 0 !important;
+        width: 88%;
+        transition: transform .7s cubic-bezier(.2,.8,.2,1), opacity .7s ease;
+    }
+
+    .path-work {
+        align-self: flex-end;
+        transform: translateX(64%) !important;
+    }
+
+    .path-academic {
+        align-self: flex-start;
+        transform: translateX(-64%) !important;
+    }
+
+    .path-work.in-view,
+    .path-academic.in-view {
+        opacity: 1 !important;
+        transform: translateX(0) !important;
+    }
+}
+
     </style>
 </head>
 <body class="font-body text-gray-800 bg-gray-50">
@@ -228,8 +217,8 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Work side -->
-                        <div class="timeline-card track-arrow to-center md:mr-7">
-                            
+                        <div class="timeline-card to-center md:mr-7 path-work">
+                            <p class="font-mono text-xs text-sage-500 mb-2 tracking-widest uppercase">Professional</p>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Freelance Full-Stack Developer</h3>
                             <p class="text-gray-600 text-sm leading-relaxed">
                                 Built a security-oriented web platform for a US client for over one year.
@@ -251,8 +240,8 @@
 </div>
                         </div>
                         <!-- Academic side -->
-                        <div class="timeline-card track-arrow to-center md:mr-7">
-                            
+                        <div class="timeline-card to-center md:mr-7 path-academic">
+                            <p class="font-mono text-xs text-ink-400 mb-2 tracking-widest uppercase">Academic</p>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">License - 2025 - Bachelor in Informatiques Systems</h3>
                             <p class="text-gray-600 text-sm leading-relaxed">
                                 Bonus: project manager for our final year academic project.
@@ -276,16 +265,16 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Work side -->
-                        <div class="timeline-card track-arrow to-center md:mr-7">
-                            
+                        <div class="timeline-card  to-center md:mr-7 path-work">
+                            <p class="font-mono text-xs text-sage-500 mb-2 tracking-widest uppercase">Professional</p>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Problem solving and solutions for local businesses</h3>
                             <p class="text-gray-600 text-sm leading-relaxed">
                                 Designed and installed many web and technical solutions for local businesses.
                             </p>
                         </div>
                         <!-- Academic side -->
-                        <div class="timeline-card track-arrow to-center md:mr-7">
-                            
+                        <div class="timeline-card to-center md:mr-7 path-academic">
+                            <p class="font-mono text-xs text-ink-400 mb-2 tracking-widest uppercase">Academic</p>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Master 1 - 2026 - Information Systems Engineering</h3>
                             <p class="text-gray-600 text-sm leading-relaxed">
                                 Deepened expertise in information systems engineering and learned how much of a currency informations and their preview systems
@@ -316,18 +305,18 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Work side -->
-                        <div class="track-arrow to-center bg-ink-900 rounded-lg p-6 shadow-md border border-white/10 hover-lift md:mr-7">
-                            <p class="font-mono text-xs text-mint-400 mb-2">WORK</p>
-                            <h3 class="text-lg font-bold text-white mb-2">2 Stealth Companies</h3>
+                        <div class=" to-center bg-ink-900 rounded-lg p-6 shadow-md border border-white/10 hover-lift md:mr-7 path-work">
+                            <p class="font-mono text-xs text-sage-500 mb-2 tracking-widest uppercase">Professional</p>
+                            <h3 class="text-lg font-bold text-white mb-2 ">2 Stealth Companies</h3>
                             <p class="text-white/70 text-sm leading-relaxed">
                                 Building 2 companies in stealth mode. One of them is launching soon.
                                 Stay tuned 🤫
                             </p>
                         </div>
                         <!-- Academic side -->
-                        <div class="timeline-card track-arrow to-center md:mr-7">
+                        <div class="timeline-card  to-center md:mr-7 path-academic">
                             
-                            
+                            <p class="font-mono text-xs text-ink-400 mb-2 tracking-widest uppercase">Academic</p>
                             <h3 class="text-lg font-bold text-gray-900 mb-2">Master 2 In Progress</h3>
                             <p class="text-gray-600 text-sm leading-relaxed">
                                 Continuing my studies, having a final year internship while building and learning new skills !
@@ -389,5 +378,19 @@
 
     <!-- Main JavaScript -->
     <script src="main.js"></script>
+<script>
+(function () {
+  var items = document.querySelectorAll('.path-work, .path-academic');
+  if (!items.length) return;
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.2, rootMargin: '0px 0px -30% 0px' });
+
+  items.forEach(function (el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>

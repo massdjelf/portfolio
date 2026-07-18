@@ -8,48 +8,8 @@
     <link rel="icon" type="image/webp" href="resources/favicon.webp">
     <meta property="og:image" content="https://massyl.uk/resources/profile-hero.webp">
     <meta property="og:url" content="https://massyl.uk">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: {
-                            50: '#f6f7f5',
-                            100: '#e8eae6',
-                            200: '#d1d5cc',
-                            300: '#b4bba8',
-                            400: '#949e85',
-                            500: '#7c8471',
-                            600: '#626858',
-                            700: '#4f5449',
-                            800: '#41443c',
-                            900: '#363931'
-                        },
-                        ink: {
-                            50: '#f4f4f6',
-                            100: '#e4e4e9',
-                            400: '#5a5d6e',
-                            600: '#33364a',
-                            800: '#1c1e2b',
-                            900: '#12141c'
-                        },
-                        mint: {
-                            300: '#c3d1b6',
-                            400: '#a8b896'
-                        }
-                    },
-                    fontFamily: {
-                        'display': ['Fraunces', 'Georgia', 'serif'],
-                        'body': ['Inter', 'system-ui', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-
+<!-- Tailwind CSS (compiled) -->
+<link rel="stylesheet" href="resources/tailwind.css">
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
@@ -91,7 +51,17 @@
 
         .certification-badge:hover {
             transform: scale(1.05);
+
         }
+
+	.splide__pagination__page {
+	    background: #d1d5cc;
+	    opacity: 1;
+	}
+	.splide__pagination__page.is-active {
+	    background: #7c8471;
+	    transform: scale(1.3);
+	}
     </style>
 </head>
 <body class="font-body text-gray-800 bg-gray-50">
@@ -355,7 +325,17 @@
                 </p>
             </div>
 
-            <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+                   <div    id="certifications-splide" class="splide">
+
+		        <div class="splide__track">
+
+       			    <ul    id="certifications-grid"class="splide__list">
+
+    			    </ul>
+
+    			</div>
+
+		  </div>
         </div>
     </section>
 

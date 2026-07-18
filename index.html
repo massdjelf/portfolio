@@ -8,48 +8,8 @@
     <link rel="icon" type="image/webp" href="resources/favicon.webp">
     <meta property="og:image" content="https://massyl.uk/resources/profile-hero.webp">
     <meta property="og:url" content="https://massyl.uk">
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        sage: {
-                            50: '#f6f7f5',
-                            100: '#e8eae6',
-                            200: '#d1d5cc',
-                            300: '#b4bba8',
-                            400: '#949e85',
-                            500: '#7c8471',
-                            600: '#626858',
-                            700: '#4f5449',
-                            800: '#41443c',
-                            900: '#363931'
-                        },
-                        ink: {
-                            50: '#f4f4f6',
-                            100: '#e4e4e9',
-                            400: '#5a5d6e',
-                            600: '#33364a',
-                            800: '#1c1e2b',
-                            900: '#12141c'
-                        },
-                        mint: {
-                            300: '#c3d1b6',
-                            400: '#a8b896'
-                        }
-                    },
-                    fontFamily: {
-                        'display': ['Fraunces', 'Georgia', 'serif'],
-                        'body': ['Inter', 'system-ui', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace']
-                    }
-                }
-            }
-        }
-    </script>
-
+<!-- Tailwind CSS (compiled) -->
+<link rel="stylesheet" href="resources/tailwind.css">
     <!-- External Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
@@ -59,6 +19,81 @@
     <!-- Custom Styles -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+
+
+
+
+/* Featured cards — full-bleed photo with gradient caption overlay, like the testimonial concept */
+#projects-grid .bg-white,
+#certifications-grid .bg-white {
+    position: relative;
+    aspect-ratio: 3/4;
+    border-radius: 20px;
+    overflow: hidden;
+    border: none;
+    box-shadow: 0 12px 30px -8px rgba(28,30,43,0.35);
+    transition: transform 0.35s cubic-bezier(.2,.8,.2,1);
+}
+
+/* alternating tilt per card, like the demo */
+#projects-grid .project-card:nth-child(3n+1) .bg-white { transform: rotate(-3deg); }
+#projects-grid .project-card:nth-child(3n+2) .bg-white { transform: rotate(2deg); }
+#projects-grid .project-card:nth-child(3n+3) .bg-white { transform: rotate(-2deg); }
+
+#projects-grid .project-card:hover .bg-white {
+    transform: rotate(0deg) translateY(-8px) scale(1.03);
+}
+
+/* image fills the entire card, not just the top */
+#projects-grid .project-image-trigger {
+    position: absolute;
+    inset: 0;
+    height: 100% !important;
+}
+#projects-grid .project-image-trigger img {
+    height: 100% !important;
+}
+
+/* text floats over the bottom of the photo via gradient, not in a separate white box below */
+#projects-grid .p-6 {
+    position: absolute;
+    inset: auto 0 0 0;
+    background: linear-gradient(to top, #12141c 15%, rgba(18,20,28,0.85) 55%, transparent 100%);
+    padding: 2rem 1.25rem 1.25rem;
+}
+#projects-grid .p-6 h3 {
+    color: #fff;
+    font-size: 1.05rem;
+}
+#projects-grid .p-6 p.line-clamp-3 {
+    display: none; /* keep it minimal, like the reference — name/title only, no long copy */
+}
+#projects-grid .p-6 .border-t {
+    border: none;
+    padding-top: 0;
+    margin-top: 0.5rem;
+}
+#projects-grid .p-6 .text-gray-400 {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+}
+#projects-grid .p-6 .view-details-btn {
+    color: #a8b896;
+}
+
+/* category badge as a small glass pill, like the star-rating chip in the reference */
+#projects-grid .bg-sage-100 {
+    background: rgba(18, 20, 28, 0.6);
+    backdrop-filter: blur(4px);
+    color: #c3d1b6;
+    border: 1px solid rgba(255,255,255,0.15);
+}
+
+
+
+
+
 
 
         .hero-bg {
@@ -297,11 +332,21 @@
                     Professional certifications that validate my skills in development, design, data and other passionate fields.
                 </p>
             </div>
-            <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate">
+            <div id="certifications-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate" data-limit="3">
                 <div class="bg-ink-50 rounded-lg p-6 border border-ink-100">
                     <p class="text-ink-400 font-mono text-sm">loading certifications...</p>
                 </div>
+
             </div>
+	<!-- View All Certifications Button -->
+	<div class="text-center mt-12 scroll-animate">
+	    <a href="skills.html#certifications" class="inline-flex items-center px-8 py-4 bg-white border border-ink-900 text-ink-900 rounded font-semibold hover:bg-ink-900 hover:text-mint-400 transition-all duration-300">
+	        View all certifications
+	        <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+	            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+	        </svg>
+	    </a>
+	</div>
         </div>
     </section>
 
@@ -319,27 +364,9 @@
                 </p>
             </div>
 
-            <!-- Project Filters -->
-            <div class="flex flex-wrap justify-center gap-3 mb-12 scroll-animate font-mono text-sm">
-                <button class="filter-btn px-5 py-2.5 bg-ink-900 text-mint-400 rounded" data-filter="all">
-                    all
-                </button>
-                <button class="filter-btn px-5 py-2.5 bg-white text-ink-600 border border-ink-100 rounded hover:border-sage-400" data-filter="web">
-                    web
-                </button>
-                <button class="filter-btn px-5 py-2.5 bg-white text-ink-600 border border-ink-100 rounded hover:border-sage-400" data-filter="mobile">
-                    mobile
-                </button>
-                <button class="filter-btn px-5 py-2.5 bg-white text-ink-600 border border-ink-100 rounded hover:border-sage-400" data-filter="design">
-                    design
-                </button>
-                <button class="filter-btn px-5 py-2.5 bg-white text-ink-600 border border-ink-100 rounded hover:border-sage-400" data-filter="data">
-                    data
-                </button>
-            </div>
 
             <!-- Projects Grid -->
-            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate">
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 scroll-animate" data-limit="3">
                 <!-- Projects will be populated by JavaScript -->
             </div>
 

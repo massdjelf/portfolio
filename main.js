@@ -6,9 +6,14 @@ class PortfolioManager {
     constructor() {
         this.projects = [];
         this.certifications = [];
+
+        this.projectSplide = null;
+        this.certificationSplide = null;
+
         this.currentFilter = 'all';
         this.searchTerm = '';
         this.sortBy = 'date-desc';
+
         this.init();
     }
 
@@ -21,6 +26,7 @@ class PortfolioManager {
         this.initializeAnimations();
         this.applyProjectView();
         this.renderCertifications();
+        this.initcarousels();
         this.setupScrollEffects();
         this.initializeParticles();
     }
@@ -74,7 +80,7 @@ class PortfolioManager {
             // Image block — fallback uses flex centering in plain HTML, no innerHTML injection
             const imageBlock = cert.image
                 ? `<div class="w-full h-40 bg-sage-50 overflow-hidden flex items-center justify-center">
-                       <img src="${cert.image}" alt="${cert.title}"
+                       <img src="${cert.image}" alt="${cert.title}" loading="lazy"
                             class="cert-img w-full h-full object-contain p-2"
                             data-fallback="icon">
                    </div>`
@@ -96,13 +102,17 @@ class PortfolioManager {
                 </div>`;
 
             return cert.credentialUrl
-                ? `<a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer"
+                ? `<li class="splide__slide">
+		      <a href="${cert.credentialUrl}" target="_blank" rel="noopener noreferrer"
                       class="certification-badge block bg-white rounded-lg overflow-hidden border border-gray-100 hover:border-sage-300 hover:shadow-lg transition-all">
                        ${cardInner}
-                   </a>`
-                : `<div class="certification-badge bg-white rounded-lg overflow-hidden border border-gray-100">
-                       ${cardInner}
-                   </div>`;
+                      </a>
+		  </li>`
+                : `<li class="splide__slide">
+			<div class="certification-badge bg-white rounded-lg overflow-hidden border border-gray-100">
+                        	${cardInner}
+                   	</div>
+		   </li>`;
         }).join('');
 
         // Attach error handlers after DOM is written — replaces broken img with centered icon
@@ -131,9 +141,19 @@ class PortfolioManager {
 
     // ─── Projects ──────────────────────────────────────────────────────────────
 
-    applyProjectView() {
-        this.renderProjects(this.getFilteredProjects());
-    }
+
+	applyProjectView() {
+	    const container = document.getElementById('projects-grid');
+	    const isHomepage = container && container.dataset.limit;
+
+	    const projectsToShow = isHomepage
+	        ? this.projects.filter(p => p.featured)
+	        : this.getFilteredProjects();
+
+	    this.renderProjects(projectsToShow);
+	    this.initProjectCarousel();
+	}
+
 
     getFilteredProjects() {
         let projects = [...this.projects];
@@ -154,7 +174,16 @@ class PortfolioManager {
             if (this.sortBy === 'date-asc')   return new Date(a.date) - new Date(b.date);
             if (this.sortBy === 'title-asc')  return a.title.localeCompare(b.title);
             if (this.sortBy === 'title-desc') return b.title.localeCompare(a.title);
-            return new Date(b.date) - new Date(a.date);
+const diff =
+    new Date(b.date) -
+    new Date(a.date);
+
+if (diff !== 0) {
+    return diff;
+}
+
+return a._idx - b._idx;
+
         });
 
         return projects;
@@ -180,14 +209,17 @@ class PortfolioManager {
         container.innerHTML = projectsToRender.map((project, index) => {
             const pid = `idx-${project._idx}`;
             return `
-            <div class="project-card group transform transition-all duration-300 hover:shadow-2xl"
-                 data-project-id="${pid}">
+
+		<li class="splide__slide">
+    		<div class="project-card group transform transition-all duration-300 hover:shadow-2xl"
+      		   data-project-id="${pid}">
+
                 <div class="bg-white rounded-lg overflow-hidden shadow-lg border border-gray-100 flex flex-col h-full">
 
                     <!-- Image zone — click opens lightbox -->
                     <div class="project-image-trigger relative overflow-hidden cursor-zoom-in flex-shrink-0"
                          data-project-id="${pid}">
-                        <img src="${project.image}" alt="${project.title}"
+                        <img src="${project.image}" alt="${project.title}" loading="lazy" loading="lazy"
                              class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110"
                              onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
                         <div class="w-full h-48 bg-sage-100 items-center justify-center" style="display:none;">
@@ -237,8 +269,11 @@ class PortfolioManager {
                             </button>
                         </div>
                     </div>
-                </div>
-            </div>
+                        </div>
+
+   		 </div>
+
+		</li>
         `;
         }).join('');
 
@@ -372,6 +407,69 @@ class PortfolioManager {
         anime({ targets: modal, opacity: [0, 1], duration: 250, easing: 'easeOutExpo' });
         modal.querySelector('.modal-close').addEventListener('click', () => this.closeModal());
     }
+
+	initcarousels() {
+	    this.initProjectCarousel();
+	    this.initCertificationCarousel();
+	}
+initProjectCarousel() {
+
+    const el = document.getElementById('projects-splide');
+
+    if (!el) return;
+
+    if (this.projectSplide) {
+        this.projectSplide.destroy();
+    }
+
+    this.projectSplide = new Splide('#projects-splide', {
+        type: 'loop',
+        perPage: 3,
+        focus: 'center',
+        gap: '2rem',
+        drag: true,
+        snap: true,
+        flickPower: 300,
+        flickMaxPages: 1,
+
+	breakpoints: {
+	    1024: { perPage: 2 },
+	    768: { perPage: 1, padding: '10%', gap: '1rem', arrows: false }
+	}
+
+
+    });
+
+    this.projectSplide.mount();
+}
+
+initCertificationCarousel() {
+
+    const el = document.getElementById('certifications-splide');
+
+    if (!el) return;
+
+    if (this.certificationSplide) {
+        this.certificationSplide.destroy();
+    }
+
+    this.certificationSplide = new Splide(
+        '#certifications-splide',
+        {
+            perPage: 3,
+            focus: 'center',
+            gap: '2rem',
+
+	        breakpoints: {
+	            1024: { perPage: 2 },
+	            768: { perPage: 1, padding: '10%', gap: '1rem', arrows: false }
+	        }
+        }
+    );
+
+    this.certificationSplide.mount();
+}
+
 
     closeModal() {
         const modal = document.querySelector('.modal-overlay, .lightbox-overlay');
@@ -518,76 +616,106 @@ class PortfolioManager {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('animate-fade-in-up');
+                    entry.target.classList.add('visible');
                 }
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+        document.querySelectorAll('.scroll-animate, .timeline-card').forEach(el => observer.observe(el));
     }
 
-    initializeParticles() {
-        const canvas = document.getElementById('particles-canvas');
-        if (!canvas) return;
+	initializeParticles() {
+	    const canvas = document.getElementById('particles-canvas');
+	    if (!canvas) return;
 
-        const ctx = canvas.getContext('2d');
-        canvas.width  = window.innerWidth;
-        canvas.height = window.innerHeight;
+    // Skip entirely on small screens — it's a subtle background detail,
+    // not worth the battery/CPU cost on mobile
+	    if (window.innerWidth < 768) return;
 
-        const particles = Array.from({ length: 50 }, () => ({
-            x:       Math.random() * canvas.width,
-            y:       Math.random() * canvas.height,
-            vx:      (Math.random() - 0.5) * 0.5,
-            vy:      (Math.random() - 0.5) * 0.5,
-            size:    Math.random() * 2 + 1,
-            opacity: Math.random() * 0.5 + 0.2
-        }));
+	    const ctx = canvas.getContext('2d');
+	    canvas.width  = window.innerWidth;
+	    canvas.height = window.innerHeight;
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                if (p.x < 0) p.x = canvas.width;
-                if (p.x > canvas.width)  p.x = 0;
-                if (p.y < 0) p.y = canvas.height;
-                if (p.y > canvas.height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(168, 184, 150, ${p.opacity})`;
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        };
-        animate();
+	    const particles = Array.from({ length: 50 }, () => ({
+	        x:       Math.random() * canvas.width,
+	        y:       Math.random() * canvas.height,
+	        vx:      (Math.random() - 0.5) * 0.5,
+	        vy:      (Math.random() - 0.5) * 0.5,
+	        size:    Math.random() * 2 + 1,
+	        opacity: Math.random() * 0.5 + 0.2
+	    }));
 
-        window.addEventListener('resize', () => {
-            canvas.width  = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-    }
+	    // Pause the loop when the tab isn't visible — free battery/CPU savings
+	    let running = true;
+	    document.addEventListener('visibilitychange', () => {
+	        running = !document.hidden;
+	    });
 
+	    const animate = () => {
+	        if (running) {
+	            ctx.clearRect(0, 0, canvas.width, canvas.height);
+	            particles.forEach(p => {
+	                p.x += p.vx;
+	                p.y += p.vy;
+	                if (p.x < 0) p.x = canvas.width;
+	                if (p.x > canvas.width)  p.x = 0;
+	                if (p.y < 0) p.y = canvas.height;
+	                if (p.y > canvas.height) p.y = 0;
+	                ctx.beginPath();
+	                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+	                ctx.fillStyle = `rgba(168, 184, 150, ${p.opacity})`;
+	                ctx.fill();
+	            });
+	        }
+	        requestAnimationFrame(animate);
+	    };
+	    animate();
+
+	    window.addEventListener('resize', () => {
+	        canvas.width  = window.innerWidth;
+	        canvas.height = window.innerHeight;
+	    });
+	}
     // ─── Contact Form ──────────────────────────────────────────────────────────
 
-    handleContactForm(e) {
-        e.preventDefault();
-        const submitBtn = e.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn ? submitBtn.textContent : null;
 
-        if (submitBtn) {
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-        }
+	async handleContactForm(e) {
+	    e.preventDefault();
+	    const form = e.target;
+	    const submitBtn = form.querySelector('button[type="submit"]');
+	    const originalText = submitBtn ? submitBtn.textContent : null;
 
-        // No backend wired — hook up to Formspree or a serverless function to deliver messages.
-        setTimeout(() => {
-            showNotification("Message sent! I'll get back to you within 24 hours.", 'success');
-            e.target.reset();
-            if (submitBtn) {
-                submitBtn.textContent = originalText;
-                submitBtn.disabled = false;
-            }
-        }, 1200);
-    }
+	    if (submitBtn) {
+	        submitBtn.textContent = 'Sending...';
+	        submitBtn.disabled = true;
+	    }
+
+	    try {
+	        const response = await fetch('https://api.web3forms.com/submit', {
+	            method: 'POST',
+	            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+	            body: JSON.stringify(Object.fromEntries(new FormData(form)))
+	        });
+	        const result = await response.json();
+
+	        if (result.success) {
+	            showNotification("Message sent! I'll get back to you within 24 hours.", 'success');
+	            form.reset();
+	        } else {
+	            showNotification("Something went wrong — try emailing me directly instead.", 'error');
+	        }
+	    } catch (err) {
+	        console.error(err);
+	        showNotification("Something went wrong — try emailing me directly instead.", 'error');
+	    } finally {
+	        if (submitBtn) {
+	            submitBtn.textContent = originalText;
+	            submitBtn.disabled = false;
+	        }
+	    }
+	}
+
+
 }
 
 // ─── Notification toast ────────────────────────────────────────────────────────
