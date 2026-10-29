@@ -5,8 +5,8 @@
    Laisser ACTIVATE_URL vide ('') = vérification désactivée :
    l'app fonctionne exactement comme avant, sans appel réseau.
    ============================================================ */
-const LICENSE_ID = '';
-const ACTIVATE_URL = '';
+const LICENSE_ID = '53c6404855c97daaa951a657';
+const ACTIVATE_URL = 'https://salle-license.massyl.workers.dev/api/activate';
 
 (function () {
   'use strict';
