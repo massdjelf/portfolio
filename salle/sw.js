@@ -1,8 +1,9 @@
-const CACHE = 'ma-salle-v1';
+const CACHE = 'ma-salle-v2';
 const SHELL = [
   './',
   './index.html',
   './styles.css',
+  './license.js',
   './app.js',
   './manifest.json',
   './icons/icon-192.png',

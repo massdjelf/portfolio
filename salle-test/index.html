@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>Ma Salle — Gestion</title>
+<meta name="description" content="Gestion des offres et des clients de la salle de sport">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1E1B18">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Ma Salle">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ===== LOCK SCREEN ===== -->
+  <section id="lock-screen">
+    <svg class="mark" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="24" height="24" rx="6" fill="#1E1B18"/>
+      <rect x="6" y="7" width="1.8" height="10" rx="0.9" fill="#E8A33D"/>
+      <rect x="9.3" y="9" width="1.6" height="6" rx="0.8" fill="#E8A33D"/>
+      <rect x="13.1" y="9" width="1.6" height="6" rx="0.8" fill="#E8A33D"/>
+      <rect x="16.2" y="7" width="1.8" height="10" rx="0.9" fill="#E8A33D"/>
+      <rect x="7.5" y="11.2" width="9" height="1.6" rx="0.8" fill="#E8A33D"/>
+    </svg>
+    <h1 id="lock-title">Entrez le code</h1>
+    <p class="hint" id="lock-hint">&nbsp;</p>
+    <div class="pin-dots" id="pin-dots">
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="keypad" id="keypad">
+      <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+      <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+      <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+      <button class="ghost" id="lock-reset-btn">Oublié</button>
+      <button data-k="0">0</button>
+      <button class="ghost" data-k="del">⌫</button>
+    </div>
+    <p id="lock-reset-hint" class="hidden">Réinitialiser efface uniquement le code — vos clients enregistrés restent intacts. Appuyez à nouveau pour confirmer.</p>
+  </section>
+
+  <!-- ===== MAIN APP ===== -->
+  <div id="main-app" class="hidden" style="display:flex; flex-direction:column; min-height:100vh;">
+    <header class="topbar">
+      <h1 id="gym-name">Ma Salle</h1>
+      <button class="icon-btn" id="settings-btn" aria-label="Réglages">⚙</button>
+    </header>
+
+    <main>
+      <!-- OFFERS VIEW -->
+      <section class="view" id="view-offers">
+        <div id="offers-list"></div>
+      </section>
+
+      <!-- CLIENTS VIEW -->
+      <section class="view hidden" id="view-clients">
+        <div class="stats-row">
+          <div class="stat-chip">
+            <div class="stat-value" id="stat-count">0</div>
+            <div class="stat-label">clients enregistrés</div>
+          </div>
+          <div class="stat-chip">
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">encaissé au total</div>
+          </div>
+        </div>
+        <div class="status-filter" id="status-filter">
+          <button class="filter-btn active" data-filter="all">Tous</button>
+          <button class="filter-btn" data-filter="active">Actifs</button>
+          <button class="filter-btn" data-filter="ended">Terminés</button>
+        </div>
+        <input type="text" class="search-input" id="client-search" placeholder="Rechercher un client">
+        <div id="clients-list"></div>
+      </section>
+    </main>
+
+    <nav class="tabbar">
+      <button class="active" id="tab-offers" data-tab="offers"><span class="dot"></span>Offres</button>
+      <button id="tab-clients" data-tab="clients"><span class="dot"></span>Clients</button>
+    </nav>
+  </div>
+
+  <!-- ===== SHEET: choose offer -> enter name ===== -->
+  <div class="overlay hidden" id="overlay-new-client">
+    <div class="sheet">
+      <h2 id="nc-offer-name">Offre</h2>
+      <p class="sheet-sub" id="nc-offer-price">0 DA</p>
+      <input type="text" id="nc-name-input" placeholder="Nom du client" autocomplete="off">
+      <div class="sheet-actions">
+        <button class="btn secondary" id="nc-cancel">Annuler</button>
+        <button class="btn primary" id="nc-save">Enregistrer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SHEET: client detail + check-in calendar ===== -->
+  <div class="overlay hidden" id="overlay-client-detail">
+    <div class="sheet">
+      <h2 id="cd-name">Nom</h2>
+      <p class="sheet-sub" id="cd-offer">Offre</p>
+      <div id="cd-status"></div>
+      <div id="cd-progress"></div>
+      <div id="cd-calendar"></div>
+      <div class="sheet-actions">
+        <button class="btn danger" id="cd-delete">Supprimer</button>
+        <button class="btn secondary" id="cd-close">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SHEET: settings ===== -->
+  <div class="overlay hidden" id="overlay-settings">
+    <div class="sheet">
+      <h2>Réglages</h2>
+      <p class="sheet-sub">Nom de la salle</p>
+      <input type="text" id="settings-gym-name">
+      <p class="sheet-sub">Modifier les prix des offres</p>
+      <div id="settings-offers-list" style="display:flex; flex-direction:column; gap:10px;"></div>
+      <div class="sheet-actions">
+        <button class="btn secondary" id="export-csv-btn">Exporter (CSV)</button>
+        <button class="btn secondary" id="import-csv-btn">Importer (CSV)</button>
+        <button class="btn primary" id="settings-save">Enregistrer</button>
+      </div>
+      <input type="file" id="import-csv-input" accept=".csv,text/csv" class="hidden">
+      <button class="btn danger" id="change-pin-btn" style="margin-top:4px;">Changer le code PIN</button>
+      <button class="btn secondary" id="settings-close">Fermer</button>
+    </div>
+  </div>
+
+  <!-- ===== SHEET: set new PIN (first run or change) ===== -->
+  <div class="overlay hidden" id="overlay-set-pin">
+    <div class="sheet" style="align-items:center; text-align:center;">
+      <h2 id="set-pin-title">Créez un code à 4 chiffres</h2>
+      <p class="sheet-sub">Ce code protège l'accès à l'application</p>
+      <div class="pin-dots" id="set-pin-dots" style="justify-content:center;">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="keypad" id="set-pin-keypad" style="margin-top:6px;">
+        <button data-k="1">1</button><button data-k="2">2</button><button data-k="3">3</button>
+        <button data-k="4">4</button><button data-k="5">5</button><button data-k="6">6</button>
+        <button data-k="7">7</button><button data-k="8">8</button><button data-k="9">9</button>
+        <div></div>
+        <button data-k="0">0</button>
+        <button class="ghost" data-k="del">⌫</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+</div>
+
+<script src="license.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
